@@ -65,8 +65,4 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user or None
 
-    async def botid(self, chat_id):
-        botid = int(chat_id)
-        return botid
-
 db = Database(Config.DB_URL, Config.DB_NAME)
