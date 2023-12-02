@@ -19,9 +19,9 @@ class Database:
         )
 
     async def botdata(chat_id):
-        bot_id = int(chat_id)
+        botid = int(chat_id)
         try:
-            bot_data = {"_id": bot_id, "total_rename": 0, "total_size": 0}
+            bot_data = {"_id": botid, "total_rename": 0, "total_size": 0}
             dbcol.insert_one(bot_data)
         except:
             pass
