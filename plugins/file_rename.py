@@ -20,7 +20,7 @@ async def set_mode(client, message):
     else:
         await db.set_upload_mode(message.from_user.id, True)
         text = f"**From Now all files will be Uploaded as Files {FILE_FOLDER}**"
-    await m.reply_text(text, quote=True)
+    await message.reply_text(text, quote=True)
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def rename_start(client, message):
