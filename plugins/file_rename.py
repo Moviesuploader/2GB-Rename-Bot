@@ -120,9 +120,9 @@ async def doc(bot, update):
          img.save(ph_path, "JPEG")
 
     await ms.edit("**Trying to 📤 Uploading...**")
-    type = update.data.split("_")[1]
+    upload_file_type = await db.get_upload_mode(update.message.chat.id)
     try:
-        if type == "document":
+        if (upload_file_type is True) or (upload_mode == "document"):
             await bot.send_document(
                 update.message.chat.id,
                 document=file_path,
@@ -130,7 +130,7 @@ async def doc(bot, update):
                 caption=caption, 
                 progress=progress_for_pyrogram,
                 progress_args=("**📤 Upload Status :-**", ms, time.time()))
-        elif type == "video": 
+        elif (upload_file_type is False) and (upload_mode == "video"):
             await bot.send_video(
 		update.message.chat.id,
 	        video=file_path,
@@ -139,7 +139,7 @@ async def doc(bot, update):
 		duration=duration,
 	        progress=progress_for_pyrogram,
 		progress_args=("**📤 Upload Status :-**", ms, time.time()))
-        elif type == "audio": 
+        elif (upload_file_type is False) and (upload_mode == "audio"):
             await bot.send_audio(
 		update.message.chat.id,
 		audio=file_path,
