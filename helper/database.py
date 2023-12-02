@@ -18,6 +18,22 @@ class Database:
             caption=None
         )
 
+    async def botdata(chat_id):
+        bot_id = int(chat_id)
+        try:
+            bot_data = {"_id": bot_id, "total_rename": 0, "total_size": 0}
+            dbcol.insert_one(bot_data)
+        except:
+            pass
+
+    async def total_rename(chat_id, renamed_file):
+        now = int(renamed_file) + 1
+        dbcol.update_one({"_id": chat_id}, {"$set": {"total_rename": str(now)}})
+
+    async def total_size(chat_id, total_size, now_file_size):
+        now = int(total_size) + now_file_size
+        dbcol.update_one({"_id": chat_id}, {"$set": {"total_size": str(now)}})
+    
     async def add_user(self, b, m):
         u = m.from_user
         if not await self.is_user_exist(u.id):
