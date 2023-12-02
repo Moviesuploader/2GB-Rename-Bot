@@ -7,7 +7,7 @@ import os, sys, time, asyncio, logging, datetime
 from helper.utils import humanbytes
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-botid = TOKEN_ONE.split(':')[0]
+botid = Config.BOT_TOKEN.split(':')[0]
  
 @Client.on_message(filters.command("stats") & filters.user(Config.ADMIN))
 async def get_stats(bot, message):
