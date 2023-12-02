@@ -48,7 +48,7 @@ async def rename_start(client, message):
         pass
 
 #@Client.on_message(filters.private & filters.reply)
-#async def refunc(client, message):
+async def refunc(client, message):
 #    reply_message = message.reply_to_message
 #    if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
 #        new_name = message.text 
@@ -75,8 +75,8 @@ async def rename_start(client, message):
 #            reply_markup=InlineKeyboardMarkup(button)
 #        )
 
-@Client.on_callback_query(filters.regex("upload"))
-async def doc(bot, update):    
+#@Client.on_callback_query(filters.regex("upload"))
+#async def doc(bot, update):    
     new_name = update.message.text
     new_filename = new_name.split(":-")[1]
     file_path = f"downloads/{new_filename}"
