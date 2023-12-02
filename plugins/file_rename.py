@@ -78,7 +78,7 @@ async def rename_start(client, message):
 #@Client.on_callback_query(filters.regex("upload"))
 async def doc(bot, update):
     reply_message = update.message.reply_to_message
-    if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
+    if ForceReply:
         new_name = update.message.text 
         await update.message.delete() 
         msg = await bot.get_messages(update.message.chat.id, reply_message.id)
