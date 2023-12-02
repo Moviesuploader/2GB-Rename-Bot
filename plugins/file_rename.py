@@ -12,9 +12,6 @@ from asyncio import sleep
 from PIL import Image
 import os, time
 
-token = os.environ.get('TOKEN', '6157557700:AAG90-whhrmQeVPWRIc9RNmkk6J0CeEIOfo')
-botid = token.split(':')[0]
-
 @Client.on_message(filters.command("mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
@@ -35,10 +32,6 @@ async def rename_start(client, message):
          await message.reply_text("**Sorry {mention} This Bot is Doesn't Support Uploading Files Bigger Than 2GB. So you Can Use 4GB Rename Bot 👉🏻 [4GB Rename Star Bots](https://t.me/Star_4GB_Rename_Bot)**")
 
     try:
-        bot_data = db.find_one(int(botid))
-        prrename = bot_data['total_rename']
-        prsize = bot_data['total_size']
-        user_deta = db.find_one(user_id)
         await message.reply_text(
             text=f"**__Please Enter New File Name...__\n\nOld File Name :-** `{filename}`",
 	    reply_to_message_id=message.id,  
@@ -71,11 +64,7 @@ async def refunc(client, message):
                 extn = "mkv"
             new_name = new_name + "." + extn
         await reply_message.delete()
-	filename = file.file_name
-        filesize = humanize.naturalsize(file.file_size)
-        fileid = file.file_id
-        db.total_rename(int(botid), prrename)
-        db.total_size(int(botid), prsize, file.file_size)
+
         button = [[InlineKeyboardButton("📁 Document",callback_data = "upload_document")]]
         if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
             button.append([InlineKeyboardButton("🎥 Video", callback_data = "upload_video")])
