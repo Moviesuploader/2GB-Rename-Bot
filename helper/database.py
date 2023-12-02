@@ -13,27 +13,11 @@ class Database:
     def new_user(self, id):
         return dict(
             _id=int(id),
-            upload_mode=False,
+            upload_mode=None,
             file_id=None,
             caption=None
         )
 
-    async def botdata(chat_id):
-        botid = int(chat_id)
-        try:
-            bot_data = {"_id": botid, "total_rename": 0, "total_size": 0}
-            dbcol.insert_one(bot_data)
-        except:
-            pass
-
-    async def total_rename(chat_id, renamed_file):
-        now = int(renamed_file) + 1
-        dbcol.update_one({"_id": chat_id}, {"$set": {"total_rename": str(now)}})
-
-    async def total_size(chat_id, total_size, now_file_size):
-        now = int(total_size) + now_file_size
-        dbcol.update_one({"_id": chat_id}, {"$set": {"total_size": str(now)}})
-    
     async def add_user(self, b, m):
         u = m.from_user
         if not await self.is_user_exist(u.id):
@@ -61,7 +45,7 @@ class Database:
 
     async def get_upload_mode(self, id):
         user = await self.col.find_one({'_id': int(id)})
-        return user.get('upload_mode', False)
+        return user.get('upload_mode', None)
 
     async def set_thumbnail(self, id, file_id):
         await self.col.update_one({'_id': int(id)}, {'$set': {'file_id': file_id}})
