@@ -136,7 +136,7 @@ async def doc(bot, update):
         await ms.edit("**Trying to 📤 Uploading...**")
         upload_file_type = await db.get_upload_mode(update.message.chat.id)
         try:
-            if upload_file_type is False:
+            if upload_file_type is True:
                 await bot.send_document(
                     update.message.chat.id,
                     document=file_path,
@@ -144,7 +144,7 @@ async def doc(bot, update):
                     caption=caption, 
                     progress=progress_for_pyrogram,
                     progress_args=("**📤 Upload Status :-**", ms, time.time()))
-            elif upload_file_type is True:
+	    else:
                 await bot.send_video(
 		    update.message.chat.id,
 	            video=file_path,
