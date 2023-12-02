@@ -4,7 +4,7 @@ from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 import os, sys, time, asyncio, logging, datetime
-
+from helper.utils import humanbytes
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 botid = TOKEN_ONE.split(':')[0]
@@ -12,17 +12,16 @@ botid = TOKEN_ONE.split(':')[0]
 @Client.on_message(filters.command("stats") & filters.user(Config.ADMIN))
 async def get_stats(bot, message):
     total_users = await db.total_users_count()
- 	  db.botdata(int(botid))
-	   data = db.get_user_data(int(botid))
-   	total_rename = data["total_rename"]
-	   total_size = data["total_size"]
+    db.botdata(int(botid))
+    data = db.get_user_data(int(botid))
+    total_rename = data["total_rename"]
+    total_size = data["total_size"]
     uptime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - bot.uptime))    
     start_t = time.time()
     st = await message.reply('**Accessing The Bot Details...**')    
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await st.edit(text=f"**--Bot Status--**\n\n**⌚️ Bot Uptime :- `{uptime}`\n🐌 Current Ping :- `{time_taken_s:.3f} MS` \n👭 Total Users 📊 :-** `{total_users}`")
-
+    await st.edit(text=f"**--Bot Status--**\n\n**⌚️ Bot Uptime :- `{uptime}`\n🐌 Current Ping :- `{time_taken_s:.3f} MS` \n👭 Total Users 📊 :- `{total_users}`\n✍🏻 Total Renamed Files :- {total_rename}\n🔢 Total Renamed Size :- {humanbytes(int(total_size))}**")
 
 #Restart to cancell all process 
 @Client.on_message(filters.private & filters.command("restart") & filters.user(Config.ADMIN))
