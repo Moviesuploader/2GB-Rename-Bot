@@ -8,6 +8,9 @@ from helper.utils import humanbytes
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+token = os.environ.get('TOKEN', '6157557700:AAG90-whhrmQeVPWRIc9RNmkk6J0CeEIOfo')
+botid = token.split(':')[0]
+
 @Client.on_message(filters.command("stats") & filters.user(Config.ADMIN))
 async def get_stats(bot, message):
     total_users = await db.total_users_count()
