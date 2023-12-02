@@ -22,7 +22,7 @@ async def set_mode(client, message):
         text = f"**From Now all files will be Uploaded as Files {FILE_FOLDER}**"
     await message.reply_text(text, quote=True)
 
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
+@Client.on_message(filters.private & (filters.document | filters.video))
 async def rename_start(client, message):
     file = getattr(message, message.media.value)
     filename = file.file_name
@@ -136,7 +136,7 @@ async def doc(bot, update):
         await ms.edit("**Trying to 📤 Uploading...**")
         upload_file_type = await db.get_upload_mode(update.message.chat.id)
         try:
-            if (upload_file_type is True) or (upload_mode == "document"):
+            if upload_file_type is True:
                 await bot.send_document(
                     update.message.chat.id,
                     document=file_path,
@@ -144,7 +144,7 @@ async def doc(bot, update):
                     caption=caption, 
                     progress=progress_for_pyrogram,
                     progress_args=("**📤 Upload Status :-**", ms, time.time()))
-            elif (upload_file_type is False) and (upload_mode == "video"):
+            elif upload_file_type is False:
                 await bot.send_video(
 		    update.message.chat.id,
 	            video=file_path,
@@ -153,15 +153,6 @@ async def doc(bot, update):
 		    duration=duration,
 	            progress=progress_for_pyrogram,
 		    progress_args=("**📤 Upload Status :-**", ms, time.time()))
-            elif (upload_file_type is False) and (upload_mode == "audio"):
-                await bot.send_audio(
-		    update.message.chat.id,
-		    audio=file_path,
-		    caption=caption,
-		    thumb=ph_path,
-		    duration=duration,
-	            progress=progress_for_pyrogram,
-	            progress_args=("**📤 Upload Status :-**", ms, time.time()))
         except Exception as e:          
             os.remove(file_path)
             if ph_path:
