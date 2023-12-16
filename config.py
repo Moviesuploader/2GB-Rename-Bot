@@ -31,14 +31,14 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "6157557700:AAG90-whhrmQeVPWRIc9RNmkk6J0CeEIOfo") 
    
     # database config
-    DB_NAME = os.environ.get("DB_NAME","starbotstamil")     
+    DB_NAME = os.environ.get("DB_NAME","star-botz")     
     DB_URL  = os.environ.get("DB_URL","mongodb+srv://KarthikMovies:KarthikUK007@cluster0.4l5byki.mongodb.net/?retryWrites=true&w=majority")
  
     # other configs
     BOT_UPTIME  = time.time()
     START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/1412d9f93d77c350d8268.jpg")
     ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '1391556668 5162208212').split()]
-    FORCE_SUB   = os.environ.get("FORCE_SUB", "-1001822021062") 
+    FORCE_SUB   = os.environ.get("FORCE_SUB", "-1001589399161") 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001821439025"))
 
     # wes response configuration     
