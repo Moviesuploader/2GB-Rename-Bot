@@ -66,6 +66,7 @@ async def refunc(client, message):
         await reply_message.delete()
         new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
+
         # Get upload mode from db
         upload_mode = await db.get_upload_mode(message.from_user.id)
 
@@ -88,30 +89,30 @@ async def refunc(client, message):
                 duration = metadata.get('duration').seconds
         except:
             pass
-        ph_path = None
-        user_id = int(update.message.chat.id) 
-        media = getattr(file, file.media.value)
-        c_caption = await db.get_caption(update.message.chat.id)
-        c_thumb = await db.get_thumbnail(update.message.chat.id)
 
-            if c_caption:
-         try:
-             caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
-         except Exception as e:
-             return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")             
-    else:
-         caption = f"**{new_filename}**"
- 
-    if (media.thumbs or c_thumb):
-         if c_thumb:
-             ph_path = await bot.download_media(c_thumb) 
-         else:
-             ph_path = await bot.download_media(media.thumbs[0].file_id)
-         Image.open(ph_path).convert("RGB").save(ph_path)
-         img = Image.open(ph_path)
-         img.resize((320, 320))
-         img.save(ph_path, "JPEG")
-        
+        ph_path = None
+        user_id = int(message.chat.id) 
+        c_caption = await db.get_caption(message.chat.id)
+        c_thumb = await db.get_thumbnail(message.chat.id)
+
+        if c_caption:
+            try:
+                caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+            except Exception as e:
+                return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")             
+        else:
+            caption = f"**{new_filename}**"
+
+        if (media.thumbs or c_thumb):
+            if c_thumb:
+                ph_path = await client.download_media(c_thumb) 
+            else:
+                ph_path = await client.download_media(media.thumbs[0].file_id)
+                Image.open(ph_path).convert("RGB").save(ph_path)
+                img = Image.open(ph_path)
+                img.resize((320, 320))
+                img.save(ph_path, "JPEG")
+
         await ms.edit("**Trying to 📤 Uploading...**")
 
         try:
@@ -128,7 +129,7 @@ async def refunc(client, message):
                 # Log the sent video to LOG_CHANNEL
                 await client.send_video(
                     chat_id=LOG_CHANNEL,
-                    document=file_path,
+                    video=file_path,
                     duration=duration,
                     caption=caption
                 )
@@ -141,7 +142,7 @@ async def refunc(client, message):
                     progress=progress_for_pyrogram,
                     progress_args=("**📤 Upload Status :-**", ms, time.time()))
 
-                # Log the sent document to LOG_CHANNELq
+                # Log the sent document to LOG_CHANNEL
                 await client.send_document(
                     chat_id=LOG_CHANNEL,
                     document=file_path,
