@@ -1,5 +1,6 @@
 from pyrogram import Client, filters, enums
 from helper.database import db
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 @Client.on_message(filters.private & filters.command('set_caption'))
 async def add_caption(client, message):
@@ -15,7 +16,7 @@ async def add_caption(client, message):
 async def see_caption(client, message):
     caption = await db.get_caption(message.from_user.id)  
     if caption:
-        await message.reply_text(f"**-- {message.from_user.mention}'s Caption :---**\n\n{caption}")
+        await message.reply_text(f"**--{message.from_user.mention}'s Caption :---**\n\n{caption}")
     else:
         await message.reply_text("__**😔 You Don't have Any Caption. So You're Set Captain.\nExample :- `/set_caption <b>{file_name}</b>`**__", parse_mode=enums.ParseMode.MARKDOWN)
 
