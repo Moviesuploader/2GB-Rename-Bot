@@ -19,10 +19,10 @@ async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
     if upload_mode:
         await db.set_upload_mode(message.from_user.id, False)
-        text = f"**From Now all files will be Uploaded as Video {VIDEO_CAMERA}**"
+        text = f"**From Now all files will be Uploaded as Files {FILE_FOLDER}**"
     else:
         await db.set_upload_mode(message.from_user.id, True)
-        text = f"**From Now all files will be Uploaded as Files {FILE_FOLDER}**"
+        text = f"**From Now all files will be Uploaded as Video {VIDEO_CAMERA}**"
     await message.reply_text(text, quote=True)
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
