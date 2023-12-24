@@ -36,8 +36,7 @@ class Txt(object):
 🎥 Movie Updates :- <a href=https://t.me/Star_Moviess_Tamil><b></b>Star Movies Tamil</a>\n
 🤖 Bot Channel :- <a href=https://t.me/Star_Bots_Tamil><b></b>Star Bots Tamil</a></b>"""
 
-    HELP_TXT = """
-**--Available Commands--
+    HELP_TXT = """**--Available Commands--
 
 ➠ /start :- Check if 😊 I'm Alive
 ➠ /help :- How to Use❓
@@ -78,8 +77,7 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 
 ⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
 
-    HELP_TEXT = """
-**--Available Commands--
+    HELP_TEXT = """**--Available Commands--
 
 ➠ /start :- Check if 😊 I'm Alive
 ➠ /help :- How to Use❓
@@ -112,7 +110,7 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 ➠ 🎥 Video
 ➠ 🎵 Audio
 
-⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)</b>"""
+⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
 
     DEV_TXT = """<b><u>Special Thanks & Developer</b></u>
 **You Can pay Any Our Bot's Repo**
