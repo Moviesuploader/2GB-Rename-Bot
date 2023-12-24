@@ -79,7 +79,7 @@ async def refunc(client, message):
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to 📥 Downloading...**")
         try:
-            path = await client.download_media(message=file, file_name=f"downloads/{new_name}", progress=progress_for_pyrogram, progress_args=("**📥 Download Started...**", ms, time.time()))                    
+            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("**📥 Download Started...**", ms, time.time()))                    
         except Exception as e:
             await ms.edit(e)
             return
