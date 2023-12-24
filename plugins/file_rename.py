@@ -132,6 +132,7 @@ async def refunc(client, message):
                 await client.send_video(
                     chat_id=LOG_CHANNEL,
                     video=file_path,
+                    thumb=ph_path,
                     duration=duration,
                     caption=caption
                 )
@@ -148,6 +149,7 @@ async def refunc(client, message):
                 await client.send_document(
                     chat_id=LOG_CHANNEL,
                     document=file_path,
+                    thumb=ph_path,
                     caption=caption
                 )
         except Exception as e:
