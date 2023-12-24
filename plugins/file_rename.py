@@ -55,19 +55,18 @@ async def rename_start(client, message):
 async def refunc(client, message):
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
-        new_name = message.text 
+        new_filename = message.text 
         await message.delete() 
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
         media = getattr(file, file.media.value)
-        if not "." in new_name:
+        if not "." in new_filename:
             if "." in media.file_name:
                 extn = media.file_name.rsplit('.', 1)[-1]
             else:
                 extn = "mkv"
-            new_name = new_name + "." + extn
+            new_filename = new_filename + "." + extn
         await reply_message.delete()
-        new_filename = new_name.split(":-")[1]
         file_path = f"downloads/{new_filename}"
 
         # Get upload mode from db
