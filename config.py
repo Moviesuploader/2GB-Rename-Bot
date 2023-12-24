@@ -54,7 +54,13 @@ class Txt(object):
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
+Example :- `/set_caption <b>📁 File Name :- {filename}
 
+💾 File Size :- {filesize}
+
+⏰ Duration :- {duration}</b>
+
+`/set_caption <b>{filename}</b>
 --How to Change Upload Mode--
 
 ➠ /change_mode :- Change Your Upload Mode (File or Video)
@@ -90,13 +96,6 @@ class Txt(object):
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
-Example :- `/set_caption <b>📁 File Name :- {filename}
-
-💾 File Size :- {filesize}
-
-⏰ Duration :- {duration}</b>
-
-`/set_caption <b>{filename}</b>
 
 --How to Change Upload Mode--
 
