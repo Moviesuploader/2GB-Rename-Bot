@@ -28,6 +28,7 @@ class Txt(object):
 
     ABOUT_TXT = """<b>🤖 My Name :- {}\n
 🧑🏻‍💻 Developer :- <a href=https://t.me/TG_Karthik><b>Karthik</b></a>\n
+💁🏻 My Best Friend :- {}\n
 📝 Language :- Python3\n
 📚 Framework :- Pyrogram\n
 📡 Hosted on :- VPS\n
@@ -36,19 +37,19 @@ class Txt(object):
 🤖 Bot Channel :- <a href=https://t.me/Star_Bots_Tamil><b></b>Star Bots Tamil</a></b>"""
 
     HELP_TXT = """
-<b><u>Available Commands</u>
+**--Available Commands--
 
 ➠ /start :- Check if 😊 I'm Alive
 ➠ /help :- How to Use❓
 ➠ /about :- to Know About Me 😌
     
-🖼️ <u>How to Set Thumbnail</u>
+🖼️ --How to Set Thumbnail--
  
 ➠ /start The Our Bot And Send Any Photo to Automatically Set Thumbnail 🖼️
 ➠ /showthumbnail :- View Current Thumbnail 🖼️
 ➠ /deletethumbnail :- Delete 🗑️ Your Thumbnail 🖼️
 
-✍🏻 <u>How to Set Custom Caption</u>
+✍🏻 --How to Set Custom Caption--
 
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
@@ -61,52 +62,59 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 
 `/set_caption <b>{filename}</b>
 
-<u>How to Change Upload Mode</u>
+--How to Change Upload Mode--
 
 ➠ /change_mode :- Change Your Upload Mode (File or Video)
 ➠ /get_mode :- Get Current Upload Mode
 
-✏️ <u>How to Rename File</u>
+✏️ --How to Rename File--
 
 ➠ Send me Any File And Type New File Name
 
-<u>📂 Supported File Formats</u>
+--📂 Supported File Formats--
 
 ➠ 📁 Document
 ➠ 🎥 Video
 ➠ 🎵 Audio
 
-⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)</b>"""
+⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
 
     HELP_TEXT = """
-<b><u>Available Commands</u>
+**--Available Commands--
 
 ➠ /start :- Check if 😊 I'm Alive
 ➠ /help :- How to Use❓
 ➠ /about :- to Know About Me 😌
     
-🖼️ <u>How to Set Thumbnail</u>
+🖼️ --How to Set Thumbnail--
  
 ➠ /start The Our Bot And Send Any Photo to Automatically Set Thumbnail 🖼️
 ➠ /showthumbnail :- View Current Thumbnail 🖼️
 ➠ /deletethumbnail :- Delete 🗑️ Your Thumbnail 🖼️
 
-✍🏻 <u>How to Set Custom Caption</u>
+✍🏻 --How to Set Custom Caption--
 
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
+Example :- `/set_caption <b>📁 File Name :- {filename}
 
-<u>How to Change Upload Mode</u>
+💾 File Size :- {filesize}
+
+⏰ Duration :- {duration}</b>
+
+`/set_caption <b>{filename}</b>
+
+--How to Change Upload Mode--
 
 ➠ /change_mode :- Change Your Upload Mode (File or Video)
 ➠ /get_mode :- Get Current Upload Mode
 
-✏️ <u>How to Rename File</u>
+✏️ --How to Rename File--
 
 ➠ Send me Any File And Type New File Name
 
-<u>📂 Supported File Formats</u>
+--📂 Supported File Formats--
 
 ➠ 📁 Document
 ➠ 🎥 Video
