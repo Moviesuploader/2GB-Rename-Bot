@@ -14,7 +14,7 @@ from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-@Client.on_message(filters.command("mode") & filters.private & filters.incoming)
+@Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
     if upload_mode:
@@ -22,7 +22,7 @@ async def set_mode(client, message):
         text = f"**From Now all Files will be Uploaded as Files {FILE_FOLDER}**"
     else:
         await db.set_upload_mode(message.from_user.id, True)
-        text = f"**From Now all Files will be Uploaded as Video {VIDEO_CAMERA}**"
+        text = f"**From Now all Files will be Uploaded as Video 🎥**"
     await message.reply_text(text, quote=True)
 
 @Client.on_message(filters.command("get_mode") & filters.private & filters.incoming)
@@ -31,9 +31,9 @@ async def get_mode(client, message):
     upload_mode = await db.get_upload_mode(user_id)
 
     if upload_mode:
-        text = "**Your current upload mode: Video Mode 🎥**"
+        text = "**Your current Upload mode :- Video Mode 🎥**"
     else:
-        text = "**Your current upload mode: File Mode 📂**"
+        text = "**Your Current Upload mode :- File Mode 📂**"
 
     await message.reply_text(text, quote=True)
 
