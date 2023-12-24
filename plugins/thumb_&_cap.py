@@ -31,10 +31,14 @@ async def delete_caption(client, message):
 async def viewthumb(client, message):    
     thumb = await db.get_thumbnail(message.from_user.id)
     if thumb:
-       await client.send_photo(chat_id=message.chat.id, photo=thumb, caption="**👆🏻 This is Your Permanent Thumbnail**")
+        buttons = [
+            [InlineKeyboardButton("❌ Delete Thumbnail", callback_data="deletethumbnail")]
+        ]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await client.send_photo(chat_id=message.chat.id, photo=thumb, caption="**👆🏻 This is Your Permanent Thumbnail**", reply_markup=reply_markup)
     else:
-        await message.reply_text("😔 __**You Don't have Any Thumbnail**__") 
-		
+        await message.reply_text("😔 __**You Don't have Any Thumbnail**__")
+
 @Client.on_message(filters.private & filters.command(['deletethumbnail']))
 async def removethumb(client, message):
     await db.set_thumbnail(message.from_user.id, file_id=None)
