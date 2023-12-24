@@ -113,8 +113,20 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 ⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
 
     DEV_TXT = """<b><u>Special Thanks & Developer</b></u>
-**You Can pay Any Our Bot's Repo**
-<b>🧑🏻‍💻 Developer :- </b><a href=https://t.me/TG_Karthik><b>Karthik</b></a>"""
+**You Can pay Any Our Bot's Repo. If you're able to Donate or Buy Our Bot's Repo, please Consider using these Methods:
+
+UPI ID :- `starbotstamil@upi`
+
+GPay :- `starbotstamil@oksbi`
+
+Phonepe :- `starbotstamil@ybl`
+
+Paytm :- `starbotstamil@paytm`
+
+After pay Must Send Screenshot Admin**
+
+<b>🧑🏻‍💻 Developer :- </b><a href=https://t.me/TG_Karthik><b>Karthik</b></a>
+**Contact me for more info**"""
 
     PROGRESS_BAR = """<b>\n
 🚀 Speed :- {3}/sec\n
