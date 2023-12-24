@@ -53,11 +53,18 @@ class Txt(object):
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
-Example :- `/set_caption 📁 File Name :- {filename}
+Example :- `/set_caption <b>📁 File Name :- {filename}
 
 💾 File Size :- {filesize}
 
-⏰ Duration :- {duration}`
+⏰ Duration :- {duration}</b>
+
+`/set_caption <b>{filename}</b>
+
+<u>How to Change Upload Mode</u>
+
+➠ /change_mode :- Change Your Upload Mode (File or Video)
+➠ /get_mode :- Get Current Upload Mode
 
 ✏️ <u>How to Rename File</u>
 
@@ -90,6 +97,11 @@ Example :- `/set_caption 📁 File Name :- {filename}
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
 
+<u>How to Change Upload Mode</u>
+
+➠ /change_mode :- Change Your Upload Mode (File or Video)
+➠ /get_mode :- Get Current Upload Mode
+
 ✏️ <u>How to Rename File</u>
 
 ➠ Send me Any File And Type New File Name
@@ -102,9 +114,8 @@ Example :- `/set_caption 📁 File Name :- {filename}
 
 ⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)</b>"""
 
-    
-#⚠️ Dᴏɴ'ᴛ Rᴇᴍᴏᴠᴇ Oᴜʀ Cʀᴇᴅɪᴛꜱ @ᴩyʀᴏ_ʙᴏᴛᴢ🙏🥲
     DEV_TXT = """<b><u>Special Thanks & Developer</b></u>
+**You Can pay Any Our Bot's Repo**
 <b>🧑🏻‍💻 Developer :- </b><a href=https://t.me/TG_Karthik><b>Karthik</b></a>"""
 
     PROGRESS_BAR = """<b>\n
