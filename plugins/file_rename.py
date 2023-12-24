@@ -10,6 +10,9 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os, time
+from config import Config
+
+LOG_CHANNEL = Config.LOG_CHANNEL
 
 @Client.on_message(filters.command("mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
