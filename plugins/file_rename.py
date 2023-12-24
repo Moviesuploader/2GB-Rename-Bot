@@ -126,8 +126,12 @@ async def refunc(client, message):
                     progress_args=("**📤 Upload Status :-**", ms, time.time()))
 
                 # Log the sent video to LOG_CHANNEL
-                log_text = f"**Output Video Sent:** {new_name}"
-                await client.send_message(LOG_CHANNEL, log_text)
+                await client.send_video(
+                    chat_id=LOG_CHANNEL,
+                    document=file_path,
+                    duration=duration,
+                    caption=caption
+                )
             else:
                 await client.send_document(
                     chat_id=message.chat.id,
@@ -137,9 +141,12 @@ async def refunc(client, message):
                     progress=progress_for_pyrogram,
                     progress_args=("**📤 Upload Status :-**", ms, time.time()))
 
-                # Log the sent document to LOG_CHANNEL
-                log_text = f"**Output Document Sent:** {new_name}"
-                await client.send_message(LOG_CHANNEL, log_text)
+                # Log the sent document to LOG_CHANNELq
+                await client.send_document(
+                    chat_id=LOG_CHANNEL,
+                    document=file_path,
+                    caption=caption
+                )
         except Exception as e:
             os.remove(path)
             await ms.edit(f"**Error :- {e}**")
