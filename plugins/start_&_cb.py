@@ -135,6 +135,7 @@ async def cb_handler(client, query: CallbackQuery):
         )
     elif data == "deletethumbnail":
         user_id = query.from_user.id
+        await query.message.delete()
         await db.set_thumbnail(user_id, file_id=None)
         await query.answer("❌️ Your Thumbnail Deleted Successfully 🗑️")
     elif data == "close":
