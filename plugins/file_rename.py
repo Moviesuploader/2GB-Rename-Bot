@@ -67,7 +67,8 @@ async def rename_start(client, message):
 async def refunc(client, message):
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
-        new_filename = message.text 
+        new_filename = message.text[:60]
+        caption = message.text
         await message.delete() 
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
@@ -78,6 +79,12 @@ async def refunc(client, message):
             else:
                 extn = "mkv"
             new_filename = new_filename + "." + extn
+        if not "." in caption:
+            if "." in media.file_name:
+                extn = media.file_name.rsplit('.', 1)[-1]
+            else:
+                extn = "mkv"
+            caption = caption + "." + extn
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
 
@@ -115,7 +122,7 @@ async def refunc(client, message):
             except Exception as e:
                 return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")             
         else:
-            caption = f"**{new_filename}**"
+            caption = f"**{caption}**"
 
         if (media.thumbs or c_thumb):
             if c_thumb:
