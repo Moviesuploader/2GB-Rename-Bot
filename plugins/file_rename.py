@@ -98,7 +98,7 @@ async def refunc(client, message):
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to 📥 Downloading...**")
         try:
-            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Download Started...</b>", ms, time.time()))                    
+            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))                    
         except Exception as e:
             await ms.edit(e)
             return
@@ -145,15 +145,15 @@ async def refunc(client, message):
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=("<b>📤 Upload Status :-</b>", ms, time.time()))
+                    progress_args=("<b>📤 Uploading...</b>", ms, time.time()))
 
                 # Log the sent video to LOG_CHANNEL
                 await client.send_video(
                     chat_id=LOG_CHANNEL,
                     video=file_path,
+                    caption=caption,
                     thumb=ph_path,
-                    duration=duration,
-                    caption=caption
+                    duration=duration
                 )
             else:
                 await client.send_document(
@@ -162,7 +162,7 @@ async def refunc(client, message):
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("<b>📤 Upload Status :-</b>", ms, time.time()))
+                    progress_args=("<b>📤 Uploading.../b>", ms, time.time()))
 
                 # Log the sent document to LOG_CHANNEL
                 await client.send_document(
