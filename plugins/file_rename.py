@@ -79,7 +79,7 @@ async def refunc(client, message):
             else:
                 extn = "mkv"
             new_filename = new_filename + "." + extn
-        if not "." in file_caption:
+        if not any(ext in file_caption for ext in [".mp4", ".mkv"]):
             if "." in media.file_name:
                 extn = media.file_name.rsplit('.', 1)[-1]
             else:
