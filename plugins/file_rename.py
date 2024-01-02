@@ -68,7 +68,7 @@ async def refunc(client, message):
     reply_message = message.reply_to_message
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
         new_filename = message.text[:60]
-        caption = message.text
+        file_caption = message.text
         await message.delete() 
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
@@ -79,12 +79,12 @@ async def refunc(client, message):
             else:
                 extn = "mkv"
             new_filename = new_filename + "." + extn
-        if not "." in caption:
+        if not "." in file_caption:
             if "." in media.file_name:
                 extn = media.file_name.rsplit('.', 1)[-1]
             else:
                 extn = "mkv"
-            caption = caption + "." + extn
+            file_caption = file_caption + "." + extn
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
 
@@ -118,11 +118,11 @@ async def refunc(client, message):
 
         if c_caption:
             try:
-                caption = c_caption.format(filename=caption, filesize=humanbytes(media.file_size), duration=convert(duration))
+                caption = c_caption.format(filename=file_caption, filesize=humanbytes(media.file_size), duration=convert(duration))
             except Exception as e:
                 return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")             
         else:
-            caption = f"**{caption}**"
+            caption = f"**{file_caption}**"
 
         if (media.thumbs or c_thumb):
             if c_thumb:
