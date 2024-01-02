@@ -118,7 +118,7 @@ async def refunc(client, message):
 
         if c_caption:
             try:
-                caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+                caption = c_caption.format(filename=caption, filesize=humanbytes(media.file_size), duration=convert(duration))
             except Exception as e:
                 return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")             
         else:
