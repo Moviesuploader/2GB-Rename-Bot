@@ -162,7 +162,7 @@ async def refunc(client, message):
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("<b>📤 Uploading.../b>", ms, time.time()))
+                    progress_args=("<b>📤 Uploading...</b>", ms, time.time()))
 
                 # Log the sent document to LOG_CHANNEL
                 await client.send_document(
