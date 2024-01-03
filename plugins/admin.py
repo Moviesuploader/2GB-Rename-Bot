@@ -21,9 +21,10 @@ async def get_stats(bot, message):
 #Restart to cancell all process 
 @Client.on_message(filters.private & filters.command("restart") & filters.user(Config.ADMIN))
 async def restart_bot(b, m):
-    await m.reply_text("**🔄 Restarting...**")
+    await m.reply_text("**ð Restarting...**")
     os.execl(sys.executable, sys.executable, *sys.argv)
-
+    await m.edit_text("**â Restarted successfully!**")
+    
 @Client.on_message(filters.command("broadcast") & filters.user(Config.ADMIN) & filters.reply)
 async def broadcast_handler(bot: Client, m: Message):
     await bot.send_message(Config.LOG_CHANNEL, f"**{m.from_user.mention} or {m.from_user.id} is Started The Broadcast 💌...**")
