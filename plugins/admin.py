@@ -18,12 +18,12 @@ async def get_stats(bot, message):
     time_taken_s = (end_t - start_t) * 1000
     await st.edit(text=f"**--Bot Status--**\n\n👭 Total Users 📊 :- `{total_users}`\n**⌚️ Bot Uptime :- `{uptime}`\n🐌 Current Ping :- `{time_taken_s:.3f} MS`**")
 
-#Restart to cancell all process 
+#Restart to Cancell all Process 
 @Client.on_message(filters.private & filters.command("restart") & filters.user(Config.ADMIN))
 async def restart_bot(b, m):
-    await m.reply_text("**ð Restarting...**")
+    await m.reply_text("**🔄 Bot Restarting...**")
     os.execl(sys.executable, sys.executable, *sys.argv)
-    await m.edit_text("**â Restarted successfully!**")
+    await m.edit_text("**✅ Bot Restarted Successfully!**")
     
 @Client.on_message(filters.command("broadcast") & filters.user(Config.ADMIN) & filters.reply)
 async def broadcast_handler(bot: Client, m: Message):
