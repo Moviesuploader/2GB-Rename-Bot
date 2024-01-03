@@ -51,7 +51,7 @@ class Txt(object):
 ✍🏻 --How to Set Custom Caption--
 
 ➠ /set_caption :- Set Custom Caption ✍🏻
-➠ /see_caption :- View Current Caption ✍🏻
+➠ /get_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
 Example :- `/set_caption <b>📁 File Name :- {filename}
 
@@ -133,6 +133,5 @@ After pay Must Send Screenshot Admin**
 💯 Percentage :- {0}%\n
 ✅ Done :- {1}\n
 💾 Size :- {2}\n
-⏰ Time Left :- {4}\n\n©️ [Star Bots Tamil](https://t.me/Star_Bots_Tamil)</b>"""
-
-
+⏰ Time Left :- {4}\n
+©️ [Star Bots Tamil](https://t.me/Star_Bots_Tamil)</b>"""
