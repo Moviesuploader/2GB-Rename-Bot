@@ -18,7 +18,7 @@ async def get_stats(bot, message):
     time_taken_s = (end_t - start_t) * 1000
     await st.edit(text=f"**--Bot Status--**\n\n👭 Total Users 📊 :- `{total_users}`\n**⌚️ Bot Uptime :- `{uptime}`\n🐌 Current Ping :- `{time_taken_s:.3f} MS`**")
 
-#Restart to Cancell all Process 
+# Restart to Cancell all Process 
 @Client.on_message(filters.private & filters.command("restart") & filters.user(Config.ADMIN))
 async def restart_bot(b, m):
     await m.reply_text("**🔄 Bot Restarting...**")
