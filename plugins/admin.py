@@ -22,8 +22,9 @@ async def get_stats(bot, message):
 @Client.on_message(filters.private & filters.command("restart") & filters.user(Config.ADMIN))
 async def restart_bot(b, m):
     await m.reply_text("**🔄 Bot Restarting...**")
+    await m.delete()
     os.execl(sys.executable, sys.executable, *sys.argv)
-    await m.edit_text("**✅ Bot Restarted Successfully!**")
+    await m.reply_text("**✅ Bot Restarted Successfully!**")
     
 @Client.on_message(filters.command("broadcast") & filters.user(Config.ADMIN) & filters.reply)
 async def broadcast_handler(bot: Client, m: Message):
