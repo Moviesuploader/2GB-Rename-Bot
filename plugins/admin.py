@@ -25,32 +25,38 @@ async def restart_bot(b, m):
     await m.delete()
     os.execl(sys.executable, sys.executable, *sys.argv)
     await m.reply_text("**✅ Bot Restarted Successfully!**")
-    
-@Client.on_message(filters.command("broadcast") & filters.user(Config.ADMIN) & filters.reply)
+
+@Client.on_message(filters.command("broadcast") & filters.user(Config.ADMIN))
 async def broadcast_handler(bot: Client, m: Message):
-    await bot.send_message(Config.LOG_CHANNEL, f"**{m.from_user.mention} or {m.from_user.id} is Started The Broadcast 💌...**")
-    all_users = await db.get_all_users()
     broadcast_msg = m.reply_to_message
+    if not broadcast_msg:
+        await m.reply_text("** Please Reply to a Message to Start the 💌 Broadcast.**")
+        return
+
+    await bot.send_message(Config.LOG_CHANNEL, f"**{m.from_user.mention} or {m.from_user.id} started the Broadcast 💌...**")
+    all_users = await db.get_all_users()
     sts_msg = await m.reply_text("**Broadcast 💌 Started...!**") 
     done = 0
     failed = 0
     success = 0
     start_time = time.time()
     total_users = await db.total_users_count()
+
     async for user in all_users:
         sts = await send_msg(user['_id'], broadcast_msg)
         if sts == 200:
-           success += 1
+            success += 1
         else:
-           failed += 1
+            failed += 1
         if sts == 400:
-           await db.delete_user(user['_id'])
+            await db.delete_user(user['_id'])
         done += 1
         if not done % 20:
-           await sts_msg.edit(f"**Broadcast 💌 in Progress :-\nTotal Users 📊 :- {total_users}\nCompleted :- {done} / {total_users}\nSuccess :- {success}\nFailed :- {failed}**")
+            await sts_msg.edit(f"**Broadcast 💌 in Progress :-\nTotal Users 📊 :- {total_users}\nCompleted :- {done} / {total_users}\nSuccess :- {success}\nFailed :- {failed}**")
+
     completed_in = datetime.timedelta(seconds=int(time.time() - start_time))
     await sts_msg.edit(f"**Broadcast Completed...\nCompleted in :- `{completed_in}`.\n\nTotal Users 📊 :- {total_users}\nCompleted :- {done} / {total_users}\nSuccess :- {success}\nFailed :- {failed}**")
-           
+
 async def send_msg(user_id, message):
     try:
         await message.copy(chat_id=int(user_id))
