@@ -123,9 +123,9 @@ async def refunc(client, message):
         
             # Renaming audio metadata
             new_title = "StarMovies.hop.sh"
-            new_subtitle = "StarMovies.hop.sh"
+            new_subtitle_title = "StarMovies.hop.sh"
             if ".mp3" in new_filename:  # Assuming it's an MP3 file
-                if rename_audio_metadata(path, new_title, new_subtitle):
+                if rename_audio_metadata(path, new_title, new_subtitle_title):
                     print("Audio metadata successfully renamed.")
                 else:
                     print("Failed to rename audio metadata.")
