@@ -122,6 +122,7 @@ async def refunc(client, message):
             path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
 
             new_title = "StarMovies.hop.sh"
+            file_path = f"downloads/{new_filename}"
             # Set titles using FFmpeg
             if set_titles(file_path, new_title):
                 print("Titles successfully set.")
