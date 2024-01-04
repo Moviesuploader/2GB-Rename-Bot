@@ -112,24 +112,28 @@ async def refunc(client, message):
         upload_mode = await db.get_upload_mode(message.from_user.id)
 
         # Determine the button based on the upload mode
-        button_text = "🎥 Video" if upload_mode else "📂 Document"
+        button_text = "ð¥ Video" if upload_mode else "ð Document"
         callback_data = "upload_video" if upload_mode else "upload_document"
 
         # Send document or video directly based on user input
-        ms = await message.reply_text("**Trying to 📥 Downloading...**")
+        ms = await message.reply_text("**Trying to ð¥ Downloading...**")
 
         try:
-            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))
+            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
+
             if any(ext in new_filename for ext in [".mp4", ".mkv"]):  # If it's an MP4 or MKV file
-            # Renaming audio metadata
-            new_title = "StarMovies.hop.sh"
-            new_subtitle_title = "StarMovies.hop.sh"
-            if ".mp3" in new_filename:  # Assuming it's an MP3 file
-                if rename_audio_metadata(path, new_title, new_subtitle_title):
-                    print("Audio metadata successfully renamed.")
-                else:
-                    print("Failed to rename audio metadata.")
-rename_subtitle_metadata(path, new_subtitle_title)
+                # Renaming audio metadata
+                new_title = "StarMovies.hop.sh"
+                new_subtitle_title = "StarMovies.hop.sh"
+                if ".mp3" in new_filename:  # Assuming it's an MP3 file
+                    if rename_audio_metadata(path, new_title, new_subtitle_title):
+                        print("Audio metadata successfully renamed.")
+                    else:
+                        print("Failed to rename audio metadata.")
+
+                # Rename subtitle metadata
+                # Adjust this part based on how subtitles are handled in your case
+                # Example: rename_subtitle_metadata(path, new_subtitle_title)
                 print("Subtitle metadata renamed.")
         except Exception as e:
             await ms.edit(str(e))
@@ -166,7 +170,7 @@ rename_subtitle_metadata(path, new_subtitle_title)
                 img.resize((320, 320))
                 img.save(ph_path, "JPEG")
 
-        await ms.edit("**Trying to 📤 Uploading...**")
+        await ms.edit("**Trying to ð¤ Uploading...**")
 
         try:
             if upload_mode:
@@ -177,7 +181,7 @@ rename_subtitle_metadata(path, new_subtitle_title)
                     thumb=ph_path,
                     duration=duration,
                     progress=progress_for_pyrogram,
-                    progress_args=("<b>📤 Uploading...</b>", ms, time.time()))
+                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time()))
 
                 # Log the sent video to LOG_CHANNEL
                 await client.send_video(
@@ -194,7 +198,7 @@ rename_subtitle_metadata(path, new_subtitle_title)
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("<b>📤 Uploading...</b>", ms, time.time()))
+                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time()))
 
                 # Log the sent document to LOG_CHANNEL
                 await client.send_document(
