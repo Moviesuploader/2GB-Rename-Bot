@@ -10,28 +10,24 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os, time
-from mutagen import File
-from pydub import AudioSegment
+import subprocess
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-def rename_audio_metadata(file_path, new_title, new_subtitle):
+def set_titles(file_path, new_title):
     try:
-        audio = AudioSegment.from_file(file_path, format="aac")
-        audio.export(file_path, format="aac", tags={'title': new_title, 'artist': new_subtitle})
-        return True
-    except Exception as e:
-        print(f"Error renaming audio metadata: {e}")
-        return False
+        # Set subtitle's title
+        subprocess.run(["ffmpeg", "-i", file_path, "-c", "copy", "-metadata:s:s:0", f"title={new_title}", f"{file_path}_temp"])
+        subprocess.run(["mv", f"{file_path}_temp", file_path])
 
-def rename_subtitle_metadata(file_path, new_subtitle_title):
-    try:
-        audio = AudioSegment.from_file(file_path, format="srt")
-        audio.export(file_path, format="srt", tags={'title': new_subtitle_title})
+        # Set audio track's title
+        subprocess.run(["ffmpeg", "-i", file_path, "-c", "copy", "-metadata:s:a:0", f"title={new_title}", f"{file_path}_temp"])
+        subprocess.run(["mv", f"{file_path}_temp", file_path])
+
         return True
     except Exception as e:
-        print(f"Error renaming subtitle metadata: {e}")
+        print(f"Error setting titles: {e}")
         return False
 
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
@@ -117,24 +113,17 @@ async def refunc(client, message):
 
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to ð¥ Downloading...**")
-
+        
         try:
             path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
 
             if any(ext in new_filename for ext in [".mp4", ".mkv"]):  # If it's an MP4 or MKV file
                 # Renaming audio metadata
                 new_title = "StarMovies.hop.sh"
-                new_subtitle_title = "StarMovies.hop.sh"
-                if ".mp3" in new_filename:  # Assuming it's an MP3 file
-                    if rename_audio_metadata(path, new_title, new_subtitle_title):
-                        print("Audio metadata successfully renamed.")
-                    else:
-                        print("Failed to rename audio metadata.")
-
-                # Rename subtitle metadata
-                # Adjust this part based on how subtitles are handled in your case
-                # Example: rename_subtitle_metadata(path, new_subtitle_title)
-                print("Subtitle metadata renamed.")
+        if set_titles(path, new_title):
+            print("Titles successfully set.")
+        else:
+            print("Failed to set titles.")
         except Exception as e:
             await ms.edit(str(e))
             return
