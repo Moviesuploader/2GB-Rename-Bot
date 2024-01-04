@@ -120,7 +120,7 @@ async def refunc(client, message):
 
         try:
             path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))
-        
+            if any(ext in new_filename for ext in [".mp4", ".mkv"]):  # If it's an MP4 or MKV file
             # Renaming audio metadata
             new_title = "StarMovies.hop.sh"
             new_subtitle_title = "StarMovies.hop.sh"
@@ -129,6 +129,8 @@ async def refunc(client, message):
                     print("Audio metadata successfully renamed.")
                 else:
                     print("Failed to rename audio metadata.")
+rename_subtitle_metadata(path, new_subtitle_title)
+                print("Subtitle metadata renamed.")
         except Exception as e:
             await ms.edit(str(e))
             return
