@@ -123,7 +123,7 @@ async def refunc(client, message):
 
             new_title = "StarMovies.hop.sh"
             # Set titles using FFmpeg
-            if set_titles(path, new_title):
+            if set_titles(file_path, new_title):
                 print("Titles successfully set.")
             else:
                 print("Failed to set titles.")
