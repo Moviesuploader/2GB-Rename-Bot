@@ -11,17 +11,27 @@ from asyncio import sleep
 from PIL import Image
 import os, time
 from mutagen import File
+from pydub import AudioSegment
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
 def rename_audio_metadata(file_path, new_title, new_subtitle):
     try:
-        audio = AudioSegment.from_file(file_path, format="mp3")
-        audio.export(file_path, format="mp3", tags={'title': new_title, 'artist': new_subtitle})
+        audio = AudioSegment.from_file(file_path, format="aac")
+        audio.export(file_path, format="aac", tags={'title': new_title, 'artist': new_subtitle})
         return True
     except Exception as e:
         print(f"Error renaming audio metadata: {e}")
+        return False
+
+def rename_subtitle_metadata(file_path, new_subtitle_title):
+    try:
+        audio = AudioSegment.from_file(file_path, format="srt")
+        audio.export(file_path, format="srt", tags={'title': new_subtitle_title})
+        return True
+    except Exception as e:
+        print(f"Error renaming subtitle metadata: {e}")
         return False
 
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
