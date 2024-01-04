@@ -113,17 +113,17 @@ async def refunc(client, message):
 
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to ð¥ Downloading...**")
-        
+
         try:
             path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
 
             if any(ext in new_filename for ext in [".mp4", ".mkv"]):  # If it's an MP4 or MKV file
                 # Renaming audio metadata
                 new_title = "StarMovies.hop.sh"
-        if set_titles(path, new_title):
-            print("Titles successfully set.")
-        else:
-            print("Failed to set titles.")
+                if set_titles(path, new_title):
+                    print("Titles successfully set.")
+                else:
+                    print("Failed to set titles.")
         except Exception as e:
             await ms.edit(str(e))
             return
@@ -203,3 +203,4 @@ async def refunc(client, message):
 
         await ms.delete() 
         os.remove(path)
+        
