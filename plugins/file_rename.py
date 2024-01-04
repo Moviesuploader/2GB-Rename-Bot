@@ -15,6 +15,15 @@ from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
+def rename_audio_metadata(file_path, new_title, new_subtitle):
+    try:
+        audio = AudioSegment.from_file(file_path, format="mp3")
+        audio.export(file_path, format="mp3", tags={'title': new_title, 'artist': new_subtitle})
+        return True
+    except Exception as e:
+        print(f"Error renaming audio metadata: {e}")
+        return False
+
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
@@ -99,20 +108,20 @@ async def refunc(client, message):
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to 📥 Downloading...**")
 
-    try:
-        path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))
+        try:
+            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))
         
-        # Renaming audio metadata
-        new_title = "StarMovies.hop.sh"
-        new_subtitle = "StarMovies.hop.sh"
-        if ".mp3" in new_filename:  # Assuming it's an MP3 file
-            if rename_audio_metadata(path, new_title, new_subtitle):
-                print("Audio metadata successfully renamed.")
-            else:
-                print("Failed to rename audio metadata.")
-    except Exception as e:
-        await ms.edit(str(e))
-        return
+            # Renaming audio metadata
+            new_title = "StarMovies.hop.sh"
+            new_subtitle = "StarMovies.hop.sh"
+            if ".mp3" in new_filename:  # Assuming it's an MP3 file
+                if rename_audio_metadata(path, new_title, new_subtitle):
+                    print("Audio metadata successfully renamed.")
+                else:
+                    print("Failed to rename audio metadata.")
+        except Exception as e:
+            await ms.edit(str(e))
+            return
 
         duration = 0
         try:
