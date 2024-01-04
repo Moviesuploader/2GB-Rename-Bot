@@ -12,19 +12,22 @@ from PIL import Image
 import os
 import subprocess
 import time
+import shutil
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
 def set_titles(file_path, new_title):
     try:
+        ffmpeg_path = shutil.which("ffmpeg")  # Get the full path to the ffmpeg executable
+
         # Set subtitle's title
-        subprocess.run(["ffmpeg", "-i", file_path, "-c", "copy", "-metadata:s:s:0", f"title={new_title}", f"{file_path}_temp"])
-        subprocess.run(["mv", f"{file_path}_temp", file_path])
+        subprocess.run([ffmpeg_path, "-i", file_path, "-c", "copy", "-metadata:s:s:0", f"title={new_title}", f"{file_path}_temp1"])
+        subprocess.run(["mv", f"{file_path}_temp1", file_path])
 
         # Set audio track's title
-        subprocess.run(["ffmpeg", "-i", file_path, "-c", "copy", "-metadata:s:a:0", f"title={new_title}", f"{file_path}_temp"])
-        subprocess.run(["mv", f"{file_path}_temp", file_path])
+        subprocess.run([ffmpeg_path, "-i", file_path, "-c", "copy", "-metadata:s:a:0", f"title={new_title}", f"{file_path}_temp2"])
+        subprocess.run(["mv", f"{file_path}_temp2", file_path])
 
         return True
     except Exception as e:
