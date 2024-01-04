@@ -10,6 +10,7 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os, time
+from mutagen import File
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
@@ -97,11 +98,21 @@ async def refunc(client, message):
 
         # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to 📥 Downloading...**")
-        try:
-            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))                    
-        except Exception as e:
-            await ms.edit(e)
-            return
+
+    try:
+        path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time()))
+        
+        # Renaming audio metadata
+        new_title = "StarMovies.hop.sh"
+        new_subtitle = "StarMovies.hop.sh"
+        if ".mp3" in new_filename:  # Assuming it's an MP3 file
+            if rename_audio_metadata(path, new_title, new_subtitle):
+                print("Audio metadata successfully renamed.")
+            else:
+                print("Failed to rename audio metadata.")
+    except Exception as e:
+        await ms.edit(str(e))
+        return
 
         duration = 0
         try:
