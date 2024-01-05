@@ -120,7 +120,7 @@ async def refunc(client, message):
             )
 
             if path:
-                new_title = "StarMovies.hop.sh"
+                new_title = str("StarMovies.hop.sh")
                 if set_titles(path, new_title):
                     print("Titles successfully set.")
                 else:
