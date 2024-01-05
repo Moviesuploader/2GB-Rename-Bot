@@ -13,7 +13,7 @@ def handle_video(client, message):
         video_file = client.download_media(file_id)
 
         # Edit metadata (example: set title)
-        edited_video = edit_metadata(video_file, title="New Title")
+        edited_video = edit_metadata(video_file, title="StarMovies.hop.sh")
 
         # Send the edited video back to the user
         client.send_video(chat_id, video=InputFile(BytesIO(edited_video)))
