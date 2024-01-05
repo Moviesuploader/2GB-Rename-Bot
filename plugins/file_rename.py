@@ -82,7 +82,7 @@ async def rename_start(client, message):
         )
     except:
         pass
-        
+
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     reply_message = message.reply_to_message
@@ -121,13 +121,17 @@ async def refunc(client, message):
         try:
             path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
 
-            new_title = "StarMovies.hop.sh"
-            file_path = f"downloads/{new_filename}"
-            # Set titles using FFmpeg
-            if set_titles(file_path, new_title):
-                print("Titles successfully set.")
+           if path:
+                new_title = "StarMovies.hop.sh"
+
+                # Set titles using FFmpeg
+                if set_titles(path, new_title):
+                    print("Titles successfully set.")
+                else:
+                    print("Failed to set titles.")
             else:
-                print("Failed to set titles.")
+                await ms.edit("**Failed to download the file.**")
+                return
         except Exception as e:
             await ms.edit(str(e))
             return
@@ -207,4 +211,3 @@ async def refunc(client, message):
 
         await ms.delete() 
         os.remove(path)
-        
