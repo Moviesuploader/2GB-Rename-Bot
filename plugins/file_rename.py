@@ -10,29 +10,11 @@ from helper.database import db
 from asyncio import sleep
 from PIL import Image
 import os
-import subprocess
 import time
 import shutil
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
-
-def set_titles(file_path, new_title):
-    try:
-        ffmpeg_path = shutil.which("ffmpeg")  # Get the full path to the ffmpeg executable
-
-        # Set subtitle's title
-        subprocess.run([ffmpeg_path, "-i", file_path, "-c", "copy", "-metadata:s:s:0", f"title={new_title}", f"{file_path}_temp1"])
-        subprocess.run(["mv", f"{file_path}_temp1", file_path])
-
-        # Set audio track's title
-        subprocess.run([ffmpeg_path, "-i", file_path, "-c", "copy", "-metadata:s:a:0", f"title={new_title}", f"{file_path}_temp2"])
-        subprocess.run(["mv", f"{file_path}_temp2", file_path])
-
-        return True
-    except Exception as e:
-        print(f"Error setting titles: {e}")
-        return False
 
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
@@ -68,7 +50,7 @@ async def rename_start(client, message):
 
     try:
         await message.reply_text(
-            text=f"**__Please Enter New File Name...__\n\nOld File Name :-** `{filename}`",
+            text=f"**Please Enter New File Name...\n\nOld File Name :-** `{filename}`",
             reply_to_message_id=message.id,
             reply_markup=ForceReply(True)
         )
@@ -118,16 +100,6 @@ async def refunc(client, message):
                 message=file, file_name=f"downloads/{new_filename}",
                 progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time())
             )
-
-            if path:
-                new_title = str("StarMovies.hop.sh")
-                if set_titles(path, new_title):
-                    print("Titles successfully set.")
-                else:
-                    print("Failed to set titles.")
-            else:
-                await ms.edit("**Failed to download the file.**")
-                return
         except Exception as e:
             await ms.edit(str(e))
             return
