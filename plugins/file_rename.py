@@ -82,49 +82,45 @@ async def rename_start(client, message):
         )
     except:
         pass
-
+        
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     reply_message = message.reply_to_message
+
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
         new_filename = message.text[:60]
         file_caption = message.text
+
         await message.delete()
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
         media = getattr(file, file.media.value)
+
         if not ".m" in new_filename:
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
-            new_filename = new_filename + "." + extn
+            extn = media.file_name.rsplit('.', 1)[-1] if "." in media.file_name else "mkv"
+            new_filename = f"{new_filename}.{extn}"
+
         if not any(ext in file_caption for ext in [".mp4", ".mkv"]):
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
-            file_caption = file_caption + "." + extn
+            extn = media.file_name.rsplit('.', 1)[-1] if "." in media.file_name else "mkv"
+            file_caption = f"{file_caption}.{extn}"
+
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
 
-        # Get upload mode from db
         upload_mode = await db.get_upload_mode(message.from_user.id)
-
-        # Determine the button based on the upload mode
         button_text = "ð¥ Video" if upload_mode else "ð Document"
         callback_data = "upload_video" if upload_mode else "upload_document"
 
-        # Send document or video directly based on user input
         ms = await message.reply_text("**Trying to ð¥ Downloading...**")
 
         try:
-            path = await client.download_media(message=file, file_name=f"downloads/{new_filename}", progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time()))
+            path = await client.download_media(
+                message=file, file_name=f"downloads/{new_filename}",
+                progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time())
+            )
 
             if path:
                 new_title = "StarMovies.hop.sh"
-
-                # Set titles using FFmpeg
                 if set_titles(path, new_title):
                     print("Titles successfully set.")
                 else:
@@ -151,13 +147,15 @@ async def refunc(client, message):
 
         if c_caption:
             try:
-                caption = c_caption.format(filename=file_caption, filesize=humanbytes(media.file_size), duration=convert(duration))
+                caption = c_caption.format(
+                    filename=file_caption, filesize=humanbytes(media.file_size), duration=convert(duration)
+                )
             except Exception as e:
                 return await ms.edit(text=f"**Your Caption Error Except Keyword Argument ({e})**")
         else:
             caption = f"**{file_caption}**"
 
-        if (media.thumbs or c_thumb):
+        if media.thumbs or c_thumb:
             if c_thumb:
                 ph_path = await client.download_media(c_thumb)
             else:
@@ -172,42 +170,30 @@ async def refunc(client, message):
         try:
             if upload_mode:
                 await client.send_video(
-                    chat_id=message.chat.id,
-                    video=file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time()))
+                    chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
+                    duration=duration, progress=progress_for_pyrogram,
+                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                )
 
-                # Log the sent video to LOG_CHANNEL
                 await client.send_video(
-                    chat_id=LOG_CHANNEL,
-                    video=file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration
+                    chat_id=LOG_CHANNEL, video=file_path, caption=caption,
+                    thumb=ph_path, duration=duration
                 )
             else:
                 await client.send_document(
-                    chat_id=message.chat.id,
-                    document=file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time()))
+                    chat_id=message.chat.id, document=file_path, thumb=ph_path,
+                    caption=caption, progress=progress_for_pyrogram,
+                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                )
 
-                # Log the sent document to LOG_CHANNEL
                 await client.send_document(
-                    chat_id=LOG_CHANNEL,
-                    document=file_path,
-                    thumb=ph_path,
-                    caption=caption
+                    chat_id=LOG_CHANNEL, document=file_path, thumb=ph_path, caption=caption
                 )
         except Exception as e:
             os.remove(path)
-            await ms.edit(f"**Error :- {e}**")
+            await ms.edit(f"**Error: {e}**")
             return
 
-        await ms.delete() 
+        await ms.delete()
         os.remove(path)
+        
