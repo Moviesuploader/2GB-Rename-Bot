@@ -208,18 +208,20 @@ async def ddl_call_back(bot, update):
 async def download_coroutine(bot, session, url, file_name, chat_id, message_id, start):
     downloaded = 0
     display_message = ""
-    async with session.get(url, timeout=0) as response:
+    async with session.get(url, timeout=None) as response:  # Remove timeout limit
         total_length = int(response.headers["Content-Length"])
         content_type = response.headers["Content-Type"]
         if "text" in content_type and total_length < 500:
             return await response.release()
+
         await bot.edit_message_text(
             chat_id,
             message_id,
             text="""Initiating Download
-**🔗 Uʀʟ :** `{}`
-**🗂️ Sɪᴢᴇ :** {}""".format(url, humanbytes(total_length))
+**ð UÊÊ :** `{}`
+**ðï¸ SÉªá´¢á´ :** {}""".format(url, humanbytes(total_length))
         )
+
         with open(file_name, "wb") as f_handle:
             while True:
                 chunk = await response.content.read(Config.CHUNK_SIZE)
@@ -227,39 +229,29 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                     break
                 f_handle.write(chunk)
                 downloaded += Config.CHUNK_SIZE
-                now = time.time()
-                diff = now - start
-                if round(diff % 5.00) == 0 or downloaded == total_length:
-                    percentage = downloaded * 100 / total_length
-                    speed = downloaded / diff
-                    elapsed_time = round(diff) * 1000
-                    time_to_completion = round(
-                        (total_length - downloaded) / speed) * 1000
-                    estimated_total_time = elapsed_time + time_to_completion
-                    try:
-                        current_message = """𝘽𝙪𝙡𝙞𝙙𝙞𝙣𝙜 𝙈𝙚𝙩𝙖𝙙𝙖𝙩𝙖
+                percentage = downloaded * 100 / total_length
 
-╭━〔PROGRESS BAR〕━◉
-┃╭━━━━━━━━━━━━━━◉
-┃┣⪼ 🚀 : {}
-┃┣⪼ ⏳️ : {}
-┃┣⪼ 🗂️ : {}
-┃┣⪼ ⏱️ : {}
-┃╰━━━━━━━━━━━━━◉
-╰━━━━━━━━━━━━━━━◉""".format(
-    url,
-    humanbytes(total_length),
-    humanbytes(downloaded),
-    TimeFormatter(estimated_total_time)
-)
-                        if current_message != display_message:
-                            await bot.edit_message_text(
-                                chat_id,
-                                message_id,
-                                text=current_message
-                            )
-                            display_message = current_message
-                    except Exception as e:
-                        logger.info(str(e))
-                        pass
+                try:
+                    current_message = """ð½ðªð¡ðððð£ð ððð©ðððð©ð
+
+â­âãPROGRESS BARãââ
+ââ­âââââââââââââââ
+ââ£âª¼ ð : {}
+ââ£âª¼ â³ï¸ : {}
+ââ£âª¼ ðï¸ : {}""".format(
+                        url,
+                        humanbytes(downloaded),
+                        humanbytes(total_length),
+                    )
+                    if current_message != display_message:
+                        await bot.edit_message_text(
+                            chat_id,
+                            message_id,
+                            text=current_message
+                        )
+                        display_message = current_message
+                except Exception as e:
+                    logger.info(str(e))
+                    pass
+
         return await response.release()
