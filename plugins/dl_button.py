@@ -57,10 +57,10 @@ async def ddl_call_back(bot, update):
                 youtube_dl_url = youtube_dl_url[o:o + l]
     user = await bot.get_me()
     mention = user["mention"]
-    description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
+    description = f"Hi {}".format(mention)
     start = datetime.now()
     await bot.edit_message_text(
-        text=Translation.DOWNLOAD_START,
+        text="Downloading..",
         chat_id=update.message.chat.id,
         message_id=update.message.message_id
     )
@@ -86,7 +86,7 @@ async def ddl_call_back(bot, update):
     if os.path.exists(download_directory):
         end_one = datetime.now()
         await bot.edit_message_text(
-            text=Translation.UPLOAD_START,
+            text="Uploading..",
             chat_id=update.message.chat.id,
             message_id=update.message.message_id
         )
@@ -97,7 +97,7 @@ async def ddl_call_back(bot, update):
             download_directory = os.path.splitext(download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
-        if file_size > Config.TG_MAX_FILE_SIZE:
+        if file_size > 4194304000:
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
                 text=Translation.RCHD_TG_API_LIMIT,
