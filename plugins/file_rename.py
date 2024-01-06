@@ -90,8 +90,6 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
 
         upload_mode = await db.get_upload_mode(message.from_user.id)
-        button_text = "ð¥ Video" if upload_mode else "ð Document"
-        callback_data = "upload_video" if upload_mode else "upload_document"
 
         ms = await message.reply_text("**Trying to ð¥ Downloading...**")
 
