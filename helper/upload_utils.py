@@ -5,6 +5,13 @@ logger = logging.getLogger(__name__)
 
 import os
 import requests
+import random
+import string
+
+def random_char(y):
+       return ''.join(random.choice(string.ascii_letters) for x in range(y))
+
+ran = (random_char(5))
 
 def DetectFileSize(url):
     r = requests.get(url, allow_redirects=True, stream=True)
