@@ -10,23 +10,20 @@ import os
 import shutil
 import time
 from datetime import datetime
-from plugins.custom_thumbnail import *
-from plugins.database.database import db
+from plugins.thumbnail import *
+from helper.database import db
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-from functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
+from helper.utils import progress_for_pyrogram, convert, humanbytes, TimeFormatter
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
-
-
-
 
 async def ddl_call_back(bot, update):
     logger.info(update)
     cb_data = update.data
     # youtube_dl extractors
     tg_send_type, youtube_dl_format, youtube_dl_ext = cb_data.split("=")
-    thumb_image_path = Config.DOWNLOAD_LOCATION + \
+    thumb_image_path = "./Downloads" + \
         "/" + str(update.from_user.id) + ".jpg"
     youtube_dl_url = update.message.reply_to_message.text
     custom_file_name = os.path.basename(youtube_dl_url)
@@ -98,7 +95,7 @@ async def ddl_call_back(bot, update):
             chat_id=update.message.chat.id,
             message_id=update.message.message_id
         )
-        file_size = Config.TG_MAX_FILE_SIZE + 1
+        file_size = 4194304000 + 1
         try:
             file_size = os.stat(download_directory).st_size
         except FileNotFoundError as exc:
@@ -211,7 +208,7 @@ async def ddl_call_back(bot, update):
 async def download_coroutine(bot, session, url, file_name, chat_id, message_id, start):
     downloaded = 0
     display_message = ""
-    async with session.get(url, timeout=Config.PROCESS_MAX_TIMEOUT) as response:
+    async with session.get(url, timeout=0) as response:
         total_length = int(response.headers["Content-Length"])
         content_type = response.headers["Content-Type"]
         if "text" in content_type and total_length < 500:
