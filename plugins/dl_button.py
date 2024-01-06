@@ -81,13 +81,8 @@ async def ddl_call_back(bot, update):
                 update.message.message_id,
                 c_time
             )
-        except asyncio.TimeOutError:
-            await bot.edit_message_text(
-                text=Translation.SLOW_URL_DECED,
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id
-            )
-            return False
+        except:
+            pass
     if os.path.exists(download_directory):
         end_one = datetime.now()
         await bot.edit_message_text(
