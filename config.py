@@ -36,7 +36,43 @@ class Txt(object):
 🎥 Movie Updates :- <a href=https://t.me/Star_Moviess_Tamil><b></b>Star Movies Tamil</a>\n
 🤖 Bot Channel :- <a href=https://t.me/Star_Bots_Tamil><b></b>Star Bots Tamil</a></b>"""
 
-    HELP_TXT = """**--Available Commands--\n\n➠ /start :- Check if 😊 I'm Alive\n➠ /help :- How to Use❓\n➠ /about :- to Know About Me 😌\n\n🖼️ --How to Set Thumbnail--\n\n➠ /start The Our Bot And Send Any Photo to Automatically Set Thumbnail 🖼️\n➠ /showthumbnail :- View Current Thumbnail 🖼️\n➠ /deletethumbnail :- Delete 🗑️ Your Thumbnail 🖼️\n\n✍🏻 --How to Set Custom Caption--\n\n➠ /set_caption :- Set Custom Caption ✍🏻\n➠ /see_caption :- View Current Caption ✍🏻\n➠ /del_caption :- Delete 🗑️ Your Caption\nExample :- `/set_caption <b>📁 File Name :- {filename}\n\n💾 File Size :- {filesize}\n\n⏰ Duration :- {duration}</b>`\n\n `/set_caption <b>{filename}</b>`\n\n--How to Change Upload Mode--\n\n➠ /change_mode :- Change Your Upload Mode (File or Video)\n➠ /get_mode :- Get Current Upload Mode\n\n✏️ --How to Rename File--\n\n➠ Send me Any File And Type New File Name\n\n--📂 Supported File Formats--\n\n➠ 📁 Document\n➠ 🎥 Video\n➠ 🎵 Audio\n\n⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
+    HELP_TXT = """**--Available Commands--
+    
+    ➠ /start :- Check if 😊 I'm Alive
+    ➠ /help :- How to Use❓
+    ➠ /about :- to Know About Me 😌
+    
+    🖼️ --How to Set Thumbnail--
+    
+    ➠ /start The Our Bot And Send Any Photo to Automatically Set Thumbnail 🖼️
+    ➠ /showthumbnail :- View Current Thumbnail 🖼️
+    ➠ /deletethumbnail :- Delete 🗑️ Your Thumbnail 🖼️
+    
+    ✍🏻 --How to Set Custom Caption--
+    
+    ➠ /set_caption :- Set Custom Caption ✍🏻
+    ➠ /see_caption :- View Current Caption ✍🏻
+    ➠ /del_caption :- Delete 🗑️ Your Caption
+    Example :- `/set_caption <b>📁 File Name :- {filename}\n\n💾 File Size :- {filesize}\n\n⏰ Duration :- {duration}</b>`
+    
+    `/set_caption <b>{filename}</b>`
+    
+    --How to Change Upload Mode--
+    
+    ➠ /change_mode :- Change Your Upload Mode (File or Video)
+    ➠ /get_mode :- Get Current Upload Mode
+    
+    ✏️ --How to Rename File--
+    
+    ➠ Send me Any File And Type New File Name
+    
+    --📂 Supported File Formats--
+    
+    ➠ 📁 Document
+    ➠ 🎥 Video
+    ➠ 🎵 Audio
+    
+    ⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
     
     HELP_TEXT = "**--Available Commands--\n\n➠ /start :- Check if 😊 I'm Alive\n➠ /help :- How to Use❓\n➠ /about :- to Know About Me 😌\n\n🖼️ --How to Set Thumbnail--\n\n➠ /start The Our Bot And Send Any Photo to Automatically Set Thumbnail 🖼️\n➠ /showthumbnail :- View Current Thumbnail 🖼️\n➠ /deletethumbnail :- Delete 🗑️ Your Thumbnail 🖼️\n\n✍🏻 --How to Set Custom Caption--\n\n➠ /set_caption :- Set Custom Caption ✍🏻\n➠ /see_caption :- View Current Caption ✍🏻\n➠ /del_caption :- Delete 🗑️ Your Caption\nExample :- `/set_caption <b>📁 File Name :- {filename}\n\n💾 File Size :- {filesize}\n\n⏰ Duration :- {duration}</b>`\n\n `/set_caption <b>{filename}</b>`\n\n--How to Change Upload Mode--\n\n➠ /change_mode :- Change Your Upload Mode (File or Video)\n➠ /get_mode :- Get Current Upload Mode\n\n✏️ --How to Rename File--\n\n➠ Send me Any File And Type New File Name\n\n--📂 Supported File Formats--\n\n➠ 📁 Document\n➠ 🎥 Video\n➠ 🎵 Audio\n\n⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"
 
