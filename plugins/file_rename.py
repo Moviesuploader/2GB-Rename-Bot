@@ -146,7 +146,7 @@ async def refunc(client, message):
                 img.save(ph_path, "JPEG")
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
-        ffprobe_path = "/ffmpeg/ffprobe"
+        ffprobe_path = "/full/path/to/ffmpeg/ffprobe"
         output = await execute(f"{shlex.quote(ffprobe_path)} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if not output:
