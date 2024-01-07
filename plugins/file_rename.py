@@ -127,8 +127,9 @@ async def refunc(client, message):
         except Exception as e:
             pass
 
-        #ffprobe_path = os.getcwd()
-        ffprobe_path = find_ffprobe()
+        ffprobe_path = os.getcwd()
+        print(f"Ffprode Path :- {ffprobe_path}")
+        #ffprobe_path = find_ffprobe()
         output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
