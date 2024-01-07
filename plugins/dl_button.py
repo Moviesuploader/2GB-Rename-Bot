@@ -187,14 +187,14 @@ async def ddl_call_back(bot, update):
             time_taken_for_download = (end_one - start).seconds
             time_taken_for_upload = (end_two - end_one).seconds
             await bot.edit_message_text(
-                text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
+                text="Dᴏᴡɴʟᴏᴀᴅᴇᴅ ɪɴ {} sᴇᴄᴏɴᴅs.\n\nTʜᴀɴᴋs Fᴏʀ Usɪɴɢ Mᴇ\n\nUᴘʟᴏᴀᴅᴇᴅ ɪɴ {} sᴇᴄᴏɴᴅs".format(time_taken_for_download, time_taken_for_upload),
                 chat_id=update.message.chat.id,
                 message_id=update.message.message_id,
                 disable_web_page_preview=True
             )
     else:
         await bot.edit_message_text(
-            text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),
+            text="Error {}".format("Incorrect Link"),
             chat_id=update.message.chat.id,
             message_id=update.message.message_id,
             disable_web_page_preview=True
@@ -219,11 +219,11 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
 
         with open(file_name, "wb") as f_handle:
             while True:
-                chunk = await response.content.read(Config.CHUNK_SIZE)
+                chunk = await response.content.read(int(128))
                 if not chunk:
                     break
                 f_handle.write(chunk)
-                downloaded += Config.CHUNK_SIZE
+                downloaded += 128
                 percentage = downloaded * 100 / total_length
 
                 try:
