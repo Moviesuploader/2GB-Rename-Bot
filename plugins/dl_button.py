@@ -10,7 +10,6 @@ import os
 import shutil
 import time
 from datetime import datetime
-from plugins.thumbnail import *
 from helper.database import db
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 from helper.utils import progress_for_pyrogram, convert, humanbytes, TimeFormatter
@@ -123,7 +122,7 @@ async def ddl_call_back(bot, update):
                 )
             else:
                  width, height, duration = await Mdata01(download_directory)
-                 thumb_image_path = await Gthumb02(bot, update, duration, download_directory)
+                 thumb_image_path = await db.get_thumbnail(message.from_user.id)
                  await bot.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
@@ -143,7 +142,7 @@ async def ddl_call_back(bot, update):
                 )
             if tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
-                thumbnail = await Gthumb01(bot, update)
+                thumbnail = await db.get_thumbnail(message.from_user.id)
                 await bot.send_audio(
                     chat_id=update.message.chat.id,
                     audio=download_directory,
@@ -161,7 +160,7 @@ async def ddl_call_back(bot, update):
                 )
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
-                thumbnail = await Gthumb02(bot, update, duration, download_directory)
+                thumbnail = await db.get_thumbnail(message.from_user.id)
                 await bot.send_video_note(
                     chat_id=update.message.chat.id,
                     video_note=download_directory,
