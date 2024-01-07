@@ -102,7 +102,8 @@ async def refunc(client, message):
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
-        ms = await message.reply_text("**Trying to Ã°ÂÂÂ¥ Downloading...**")
+        ffprobe_path = os.getcwd()
+        ms = await message.reply_text(f"**Trying to Ã°ÂÂÂ¥ Downloading...** `{ffprobe_path}`")
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
