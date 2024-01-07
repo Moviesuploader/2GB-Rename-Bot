@@ -120,7 +120,7 @@ async def refunc(client, message):
             pass
 
         # Edit Stream Titles
-        ffprobe = get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe")
+        ffprobe = get_ffprobe_path(path, ffprobe_path="ffprobe")
         output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if return_code != 0:
