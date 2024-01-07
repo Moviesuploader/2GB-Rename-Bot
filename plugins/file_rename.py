@@ -20,11 +20,16 @@ from config import Config
 from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4
 from mutagen import File
+from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-def get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe"):
-    info = ffmpeg.probe(path, cmd=ffprobe_path)
+async def get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe") -> Tuple[str, str, int, int]:
+    try:
+        ffprobe_output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        return ffprobe_output
+    except Exception as e:
+        return None
         
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
@@ -120,15 +125,14 @@ async def refunc(client, message):
             pass
 
         # Edit Stream Titles
-        ffprobe = get_ffprobe_path(path, ffprobe_path="ffprobe")
-        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-
-        if return_code != 0:
+        ffprobe_output = await get_ffprobe_path(path, ffprobe_path="ffprobe")
+        
+        if not ffprobe_output:
             await rm_dir(path)
             return await ms.edit(f"**Error fetching media info: {error}**")
 
         try:
-            details = json.loads(output)
+            details = json.loads(ffprobe_output[0])
             middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
 
             title = "StarMovies.hop.sh"
