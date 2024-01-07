@@ -140,12 +140,10 @@ async def refunc(client, message):
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
         #ffprobe_path = client.get_ffprobe_path()
-        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-
-        if not output:
+        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        if return_code != 0:
             await rm_dir(path)
-            return await ms.edit("**Can't fetch media info!**")
-
+            return await ms.edit(f"**Error fetching media info: {error}**")
         try:
             details = json.loads(output[0])
             middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
