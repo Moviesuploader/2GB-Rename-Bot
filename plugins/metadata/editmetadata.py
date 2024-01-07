@@ -19,12 +19,16 @@ def filesystem_free(path='.'):
 async def video_info_handler(c: Client, m: Message):
     if filesystem_free() < 5000000000:
         return await m.reply_text(
-            "Because of less server space I can't do this task right now !!\n\n"
-            "Please try again after some time or use @AHToolsBot to do same task.",
+            "Because of less server space, I can't do this task right now!\n\n"
+            "Please try again after some time or use @AHToolsBot to do the same task.",
             True
         )
     if (not m.reply_to_message) or (len(m.command) == 1):
-        await m.reply_text(f"Reply to video with,\n/{m.command[0]} `--change-title` new title `--change-video-title` new video title `--change-audio-title` new audio title `--change-subtitle-title` new subtitle title `--change-file-name` new file name", True)
+        await m.reply_text(
+            f"Reply to a video with,\n"
+            f"/{m.command[0]} --change-title [new title] --change-video-title [new video title] --change-audio-title [new audio title] --change-subtitle-title [new subtitle title]",
+            True
+        )
         return
     title = None
     video_title = None
