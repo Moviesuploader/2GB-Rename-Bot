@@ -1,7 +1,5 @@
 import shutil
 import aiofiles.os
-from configs import Config
-
 
 async def rm_dir(root: str = f"{Config.DOWNLOAD_DIR}"):
     """
@@ -13,7 +11,7 @@ async def rm_dir(root: str = f"{Config.DOWNLOAD_DIR}"):
     try:
         shutil.rmtree(root)
     except Exception as e:
-        Config.LOGGER.getLogger(__name__).error(e)
+        logging.getLogger(__name__).error(e)
 
 
 async def rm_file(file_path: str):
