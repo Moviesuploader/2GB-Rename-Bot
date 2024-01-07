@@ -141,23 +141,6 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.delete()
         await db.set_thumbnail(user_id, file_id=None)
         await query.answer("❌️ Your Thumbnail Deleted Successfully 🗑️")
-    elif data == "settings":
-        await query.message.edit_text(
-            text="Change ⚙️ Settings For {}".format(query.from_user.mention),
-            disable_web_page_preview = True,
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/Star_Bots_Tamil")
-                ],[
-                InlineKeyboardButton("👥 Support Group", url="https://t.me/Star_Bots_Tamil_Support")
-                ],[
-                InlineKeyboardButton("⚙️ Settings", callback_data = "settings")
-                ],[
-                InlineKeyboardButton("🛠️ Help", callback_data = "help"),
-                InlineKeyboardButton("🏠 Home", callback_data = "start")
-                ],[
-                InlineKeyboardButton('🔒 Close', callback_data='close')
-            ]])            
-        )
     elif data == "close":
         try:
             await query.message.delete()
