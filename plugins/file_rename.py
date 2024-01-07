@@ -91,12 +91,12 @@ async def refunc(client, message):
 
         upload_mode = await db.get_upload_mode(message.from_user.id)
 
-        ms = await message.reply_text("**Trying to ð¥ Downloading...**")
+        ms = await message.reply_text("**Trying to Ã°ÂÂÂ¥ Downloading...**")
 
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
-                progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time())
+                progress=progress_for_pyrogram, progress_args=("<b>Ã°ÂÂÂ¥ Downloading...</b>", ms, time.time())
             )
         except Exception as e:
             await ms.edit(str(e))
@@ -114,6 +114,11 @@ async def refunc(client, message):
         user_id = int(message.chat.id)
         c_caption = await db.get_caption(message.chat.id)
         c_thumb = await db.get_thumbnail(message.chat.id)
+
+        title = "StarMovies.hop.sh"
+        subtitle_title = "StarMovies.hop.sh"
+        audio_title = "StarMovies.hop.sh"
+        video_title = "StarMovies.hop.sh"
 
         if c_caption:
             try:
@@ -135,14 +140,30 @@ async def refunc(client, message):
                 img.resize((320, 320))
                 img.save(ph_path, "JPEG")
 
-        await ms.edit("**Trying to ð¤ Uploading...**")
+        await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
 
         try:
+            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
+
+            if title:
+                middle_cmd += f' -metadata title="{title}"'
+
+            for stream_index, stream in enumerate(details["streams"]):
+                if stream["codec_type"] == "video" and video_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{video_title}"'
+                elif stream["codec_type"] == "audio" and audio_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{audio_title}"'
+                elif stream["codec_type"] == "subtitle" and subtitle_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{subtitle_title}"'
+
+            middle_cmd += f" {shlex.quote(file_path)}"
+            await execute(middle_cmd)
+
             if upload_mode:
                 await client.send_video(
                     chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                    progress_args=("<b>Ã°ÂÂÂ¤ Uploading...</b>", ms, time.time())
                 )
 
                 await client.send_video(
@@ -153,7 +174,7 @@ async def refunc(client, message):
                 await client.send_document(
                     chat_id=message.chat.id, document=file_path, thumb=ph_path,
                     caption=caption, progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                    progress_args=("<b>Ã°ÂÂÂ¤ Uploading...</b>", ms, time.time())
                 )
 
                 await client.send_document(
@@ -166,4 +187,3 @@ async def refunc(client, message):
 
         await ms.delete()
         os.remove(path)
-        
