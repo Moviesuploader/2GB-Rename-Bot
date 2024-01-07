@@ -125,7 +125,8 @@ async def refunc(client, message):
             pass
 
         #ffprobe_path = os.getcwd()
-        output = await execute(f"./ffmpeg/ffprobe_path -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        ffprobe_path = ffprobe(file_path=file_path)
+        output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
             await rm_dir(path)
