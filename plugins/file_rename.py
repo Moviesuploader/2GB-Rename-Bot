@@ -119,7 +119,7 @@ async def refunc(client, message):
             pass
 
         # Edit Stream Titles
-        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        output, error, return_code, process_pid = await execute(f"ffmpeg -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if return_code != 0:
             await rm_dir(path)
@@ -133,16 +133,17 @@ async def refunc(client, message):
             subtitle_title = "StarMovies.hop.sh"
             audio_title = "StarMovies.hop.sh"
             video_title = "StarMovies.hop.sh"
-
+            if title:
+                middle_cmd += f' -metadata title="{title}"'
             for stream_index, stream in enumerate(details["streams"]):
                 if stream["codec_type"] == "video" and video_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{video_title}"'
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{video_title}"'
                 elif stream["codec_type"] == "audio" and audio_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{audio_title}"'
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
                 elif stream["codec_type"] == "subtitle" and subtitle_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{subtitle_title}"'
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
 
-            middle_cmd += f" {shlex.quote(file_path)}"
+            middle_cmd += f"{shlex.quote(file_path)}"
             await execute(middle_cmd)
         except Exception as e:
             # Clean up and handle the error
