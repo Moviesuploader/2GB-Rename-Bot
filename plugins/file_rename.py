@@ -16,6 +16,9 @@ import json
 import shlex
 from plugins.utils import get_media_file_name, get_file_attr, rm_dir, execute
 from config import Config
+from mutagen.mp3 import MP3
+from mutagen.mp4 import MP4
+from mutagen import File
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
@@ -70,7 +73,7 @@ async def rename_start(client, message):
         )
     except:
         pass
-        
+
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     reply_message = message.reply_to_message
@@ -102,21 +105,56 @@ async def refunc(client, message):
 
         duration = 0
         try:
-            metadata = extractMetadata(createParser(path))
-            if metadata.has("duration"):
-                duration = metadata.get('duration').seconds
-        except:
+            if media.file_name.endswith(".mp3"):
+                audio = MP3(path)
+                duration = audio.info.length
+            elif media.file_name.endswith((".mp4", ".mkv")):
+                audio = MP4(path)
+                duration = audio.info.length
+            elif media.file_name.endswith(".ogg"):
+                audio = File(path)
+                duration = audio.info.length
+
+        except Exception as e:
             pass
 
+        # Edit Stream Titles
+        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+
+        if return_code != 0:
+            await rm_dir(path)
+            return await ms.edit(f"**Error fetching media info: {error}**")
+
+        try:
+            details = json.loads(output)
+            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
+
+            title = "StarMovies.hop.sh"
+            subtitle_title = "StarMovies.hop.sh"
+            audio_title = "StarMovies.hop.sh"
+            video_title = "StarMovies.hop.sh"
+
+            for stream_index, stream in enumerate(details["streams"]):
+                if stream["codec_type"] == "video" and video_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{video_title}"'
+                elif stream["codec_type"] == "audio" and audio_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{audio_title}"'
+                elif stream["codec_type"] == "subtitle" and subtitle_title:
+                    middle_cmd += f' -metadata:s:{stream_index} title="{subtitle_title}"'
+
+            middle_cmd += f" {shlex.quote(file_path)}"
+            await execute(middle_cmd)
+        except Exception as e:
+            # Clean up and handle the error
+            await rm_dir(path)
+            await ms.edit(f"**Error editing stream titles: {e}**")
+            return
+
+        # Set Caption and Thumbnail
         ph_path = None
         user_id = int(message.chat.id)
         c_caption = await db.get_caption(message.chat.id)
         c_thumb = await db.get_thumbnail(message.chat.id)
-
-        title = "StarMovies.hop.sh"
-        subtitle_title = "StarMovies.hop.sh"
-        audio_title = "StarMovies.hop.sh"
-        video_title = "StarMovies.hop.sh"
 
         if c_caption:
             try:
@@ -139,36 +177,15 @@ async def refunc(client, message):
                 img.save(ph_path, "JPEG")
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
-        #ffprobe_path = client.get_ffprobe_path()
-        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-        if return_code != 0:
-            await rm_dir(path)
-            return await ms.edit(f"**Error fetching media info: {error}**")
+
         try:
-            details = json.loads(output[0])
-            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
-
-            if title:
-                middle_cmd += f' -metadata title="{title}"'
-
-            for stream_index, stream in enumerate(details["streams"]):
-                if stream["codec_type"] == "video" and video_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{video_title}"'
-                elif stream["codec_type"] == "audio" and audio_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{audio_title}"'
-                elif stream["codec_type"] == "subtitle" and subtitle_title:
-                    middle_cmd += f' -metadata:s:{stream_index} title="{subtitle_title}"'
-
-            middle_cmd += f" {shlex.quote(file_path)}"
-            await execute(middle_cmd)
-
             if upload_mode:
                 await client.send_video(
                     chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
                     progress_args=("<b>Ã°ÂÂÂ¤ Uploading...</b>", ms, time.time())
                 )
-
+                # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_video(
                     chat_id=LOG_CHANNEL, video=file_path, caption=caption,
                     thumb=ph_path, duration=duration
@@ -179,11 +196,13 @@ async def refunc(client, message):
                     caption=caption, progress=progress_for_pyrogram,
                     progress_args=("<b>Ã°ÂÂÂ¤ Uploading...</b>", ms, time.time())
                 )
-
+                # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_document(
                     chat_id=LOG_CHANNEL, document=file_path, thumb=ph_path, caption=caption
                 )
+
         except Exception as e:
+            # Clean up and handle the error
             os.remove(path)
             await ms.edit(f"**Error: {e}**")
             return
