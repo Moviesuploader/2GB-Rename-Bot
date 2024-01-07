@@ -4,7 +4,6 @@ from typing import Tuple
 from pyrogram.types import Message
 import shutil
 import aiofiles.os
-import logging
 
 async def execute(cmnd: str) -> Tuple[str, str, int, int]:
     cmnds = shlex.split(cmnd)
@@ -113,7 +112,7 @@ async def rm_dir(root: str = f"./Downloads"):
     try:
         shutil.rmtree(root)
     except Exception as e:
-        logging.getLogger(__name__).error(e)
+        print(Error :- {e})
 
 async def rm_file(file_path: str):
     try:
