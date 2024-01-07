@@ -108,7 +108,7 @@ def get_thumb_file_id(message: Message):
     else:
         return None
 
-async def rm_dir(root: str = f"./downloads"):
+async def rm_dir(root: str = f"/downloads"):
     try:
         shutil.rmtree(root)
     except Exception as e:
