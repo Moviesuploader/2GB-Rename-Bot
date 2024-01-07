@@ -17,8 +17,6 @@ def filesystem_free(path='.'):
 
 @Client.on_message(filters.command("video_info") & filters.private)
 async def video_info_handler(c: Client, m: Message):
-    user = m.from_user
-    await db.add_user(c, m)
     if filesystem_free() < 5000000000:
         return await m.reply_text(
             "Because of less server space I can't do this task right now !!\n\n"
