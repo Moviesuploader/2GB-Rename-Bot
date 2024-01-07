@@ -1,9 +1,7 @@
-# (c) @AbirHasan2005
-
 import asyncio
 from pyrogram import types, errors
-from configs import Config
-from bot.core.db.database import db
+from helper.database import db
+from config import Config
 
 async def show_settings(m: "types.Message"):
     usr_id = m.chat.id
