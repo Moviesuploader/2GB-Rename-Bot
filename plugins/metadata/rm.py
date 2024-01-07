@@ -1,7 +1,7 @@
 import shutil
 import aiofiles.os
 
-async def rm_dir(root: str = f"{Config.DOWNLOAD_DIR}"):
+async def rm_dir(root: str = f"./Downloads"):
     """
     Delete a Folder.
 
