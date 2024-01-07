@@ -147,11 +147,11 @@ async def refunc(client, message):
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
         
-        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(the_media)}")
+        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if not output:
             await rm_dir(root_dl_loc)
-            return await editable.edit("Can't fetch media info!")
+            return await ms.edit("**Can't fetch media info!**")
 
         try:
             details = json.loads(output[0])
