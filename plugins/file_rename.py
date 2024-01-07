@@ -14,6 +14,7 @@ import time
 import shutil
 import json
 import shlex
+import ffmpeg
 from plugins.utils import get_media_file_name, get_file_attr, rm_dir, execute
 from config import Config
 from mutagen.mp3 import MP3
@@ -22,9 +23,9 @@ from mutagen import File
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-#def get_ffprobe_path():
-#    return os.path.abspath("./bin/ffprobe.exe")
-
+def get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe"):
+    info = ffmpeg.probe(path, cmd=ffprobe_path)
+        
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
@@ -119,7 +120,8 @@ async def refunc(client, message):
             pass
 
         # Edit Stream Titles
-        output, error, return_code, process_pid = await execute(f"ffmpeg -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        ffprobe = get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe")
+        output, error, return_code, process_pid = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if return_code != 0:
             await rm_dir(path)
