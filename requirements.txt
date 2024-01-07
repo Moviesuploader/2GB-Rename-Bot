@@ -11,4 +11,4 @@ pyromod
 hachoir
 mutagen
 psutil
-ffmpeg
+ffmpeg-python
