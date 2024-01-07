@@ -129,7 +129,7 @@ async def refunc(client, message):
         
         if not ffprobe_output:
             await rm_dir(path)
-            return await ms.edit(f"**Error fetching media info: {error}**")
+            return await ms.edit(f"**Error fetching media info**")
 
         try:
             details = json.loads(ffprobe_output[0])
