@@ -128,13 +128,13 @@ async def refunc(client, message):
             pass
 
         #ffprobe_path = os.getcwd()
-        ffprobe = find_ffprobe()
-        ffprobe_path = ffprobe(file_path=file_path)
+        ffprobe_path = find_ffprobe()
         output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
             await rm_dir(path)
-            return await ms.edit(f"**Error fetching media info**")
+            ffprobepath = os.getcwd()
+            return await ms.edit(f"**Error fetching media info** `{ffprobepath}`")
 
         try:
             details = json.loads(output[0])
