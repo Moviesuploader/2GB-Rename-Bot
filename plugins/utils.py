@@ -112,7 +112,7 @@ async def rm_dir(root: str = f"./Downloads"):
     try:
         shutil.rmtree(root)
     except Exception as e:
-        print(Error :- {e})
+        print(f"Error :- {e}")
 
 async def rm_file(file_path: str):
     try:
