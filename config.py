@@ -57,9 +57,10 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 
 💾 File Size :- {filesize}
 
-⏰ Duration :- {duration}</b>
+⏰ Duration :- {duration}</b>`
 
-`/set_caption <b>{filename}</b>
+`/set_caption <b>{filename}</b>`
+
 --How to Change Upload Mode--
 
 ➠ /change_mode :- Change Your Upload Mode (File or Video)
@@ -77,7 +78,7 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 
 ⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
 
-    HELP_TEXT = """**--Available Commands--
+    HELP_TEXT = "**--Available Commands--
 
 ➠ /start :- Check if 😊 I'm Alive
 ➠ /help :- How to Use❓
@@ -94,6 +95,13 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 ➠ /set_caption :- Set Custom Caption ✍🏻
 ➠ /see_caption :- View Current Caption ✍🏻
 ➠ /del_caption :- Delete 🗑️ Your Caption
+Example :- `/set_caption <b>📁 File Name :- {filename}
+
+💾 File Size :- {filesize}
+
+⏰ Duration :- {duration}</b>`
+
+`/set_caption <b>{filename}</b>`
 
 --How to Change Upload Mode--
 
@@ -110,7 +118,7 @@ Example :- `/set_caption <b>📁 File Name :- {filename}
 ➠ 🎥 Video
 ➠ 🎵 Audio
 
-⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"""
+⚠️ Contact For Any Problem :- [👥 Support Group](https://t.me/Star_Bots_Tamil_Support)**"
 
     DEV_TXT = """<b><u>Special Thanks & Developer</b></u>
 **You Can pay Any Our Bot's Repo. If you're able to Donate or Buy Our Bot's Repo, please Consider using these Methods:
