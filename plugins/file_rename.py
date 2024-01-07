@@ -14,9 +14,7 @@ import time
 import shutil
 import json
 import shlex
-from plugins.metadata.file_info import get_media_file_name, get_file_attr
-from plugins.metadata.rm import rm_dir
-from plugins.metadata.executor import execute
+from plugins.utils import get_media_file_name, get_file_attr, rm_dir, execute
 from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
