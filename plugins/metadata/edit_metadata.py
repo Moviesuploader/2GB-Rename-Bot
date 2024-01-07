@@ -3,7 +3,6 @@ import time
 import json
 import shlex
 import shutil
-from config import Config
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from plugins.metadata.file_info import get_media_file_name, get_file_attr
