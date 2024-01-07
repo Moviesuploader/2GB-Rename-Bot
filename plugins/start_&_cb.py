@@ -43,9 +43,9 @@ async def help(client, message):
         InlineKeyboardButton('🔒 Close', callback_data='close')
     ]])
     if Config.START_PIC:
-        await message.reply_photo(Config.START_PIC, caption=Txt.HELP_TEXT.format(user.mention), parse_mode=enums.ParseMode.MARKDOWN, reply_markup=button)       
+        await message.reply_photo(Config.START_PIC, caption=Txt.HELP_TXT.format(user.mention), parse_mode=enums.ParseMode.MARKDOWN, reply_markup=button)       
     else:
-        await message.reply_text(text=Txt.HELP_TEXT.format(user.mention), reply_markup=button, parse_mode=enums.ParseMode.MARKDOWN, disable_web_page_preview=True)
+        await message.reply_text(text=Txt.HELP_TXT.format(user.mention), reply_markup=button, parse_mode=enums.ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @Client.on_message(filters.private & filters.command("about"))
 async def about(client, message):
