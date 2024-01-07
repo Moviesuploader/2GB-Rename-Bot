@@ -146,8 +146,15 @@ async def refunc(client, message):
                 img.save(ph_path, "JPEG")
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
+        
+        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(the_media)}")
+
+        if not output:
+            await rm_dir(root_dl_loc)
+            return await editable.edit("Can't fetch media info!")
 
         try:
+            details = json.loads(output[0])
             middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
 
             if title:
