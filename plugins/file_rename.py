@@ -143,7 +143,7 @@ async def refunc(client, message):
         output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if not output:
-            await rm_dir(root_dl_loc)
+            await rm_dir(path)
             return await ms.edit("**Can't fetch media info!**")
 
         try:
