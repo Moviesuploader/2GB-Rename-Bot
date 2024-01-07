@@ -19,6 +19,9 @@ from config import Config
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
+#def get_ffprobe_path():
+#    return os.path.abspath("./bin/ffprobe.exe")
+
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
@@ -144,8 +147,8 @@ async def refunc(client, message):
                 img.save(ph_path, "JPEG")
 
         await ms.edit("**Trying to Ã°ÂÂÂ¤ Uploading...**")
-        ffprobe_path = "../../ffmpeg/ffprobe"
-        output = await execute(f"{shlex.quote(ffprobe_path)} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        #ffprobe_path = client.get_ffprobe_path()
+        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
 
         if not output:
             await rm_dir(root_dl_loc)
