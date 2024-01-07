@@ -101,7 +101,7 @@ async def video_info_handler(c: Client, m: Message):
         return
     try: os.remove(the_media)
     except: pass
-    upload_as_doc = await db.get_upload_as_doc(m.from_user.id)
+    upload_mode = await db.get_upload_mode(m.from_user.id)  # Replaced get_upload_as_doc to get_upload_mode
     _default_thumb_ = await db.get_thumbnail(m.from_user.id)
     if not _default_thumb_:
         _m_attr = get_file_attr(m.reply_to_message)
@@ -110,7 +110,7 @@ async def video_info_handler(c: Client, m: Message):
             else None
     if _default_thumb_:
         _default_thumb_ = await c.download_media(_default_thumb_, root_dl_loc)
-    if (not upload_as_doc) and m.reply_to_message.video:
+    if (not upload_mode) and m.reply_to_message.video:  # Replaced get_upload_as_doc to get_upload_mode
         await c.upload_video(
             chat_id=m.chat.id,
             video=f"{dl_loc}{new_file_name}",
