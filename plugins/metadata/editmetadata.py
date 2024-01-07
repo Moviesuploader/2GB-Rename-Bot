@@ -20,15 +20,15 @@ async def video_info_handler(c: Client, m: Message):
         )
         return
 
+    file_type = m.reply_to_message.video or m.reply_to_message.document
+    if not file_type:
+        await m.reply_text("This is not a Video or Document!", True)
+        return
+
     title = "StarMovies.hop.sh"
     subtitle_title = "StarMovies.hop.sh"
     audio_title = "StarMovies.hop.sh"
     video_title = "StarMovies.hop.sh"
-
-    file_type = m.reply_to_message.video or m.reply_to_message.document
-    if not file_type.mime_type.startswith("video/"):
-        await m.reply_text("This is not a Video!", True)
-        return
 
     editable = await m.reply_text("Downloading Video...", quote=True)
     dl_loc = "./Downloads" + "/" + str(m.from_user.id) + "/" + str(m.message_id) + "/"
