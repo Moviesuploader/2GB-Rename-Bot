@@ -4,6 +4,7 @@ from typing import Tuple
 from pyrogram.types import Message
 import shutil
 import aiofiles.os
+import logging
 
 async def execute(cmnd: str) -> Tuple[str, str, int, int]:
     cmnds = shlex.split(cmnd)
