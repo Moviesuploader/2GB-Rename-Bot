@@ -124,15 +124,15 @@ async def refunc(client, message):
         except Exception as e:
             pass
 
-        # Edit Stream Titles
-        ffprobe_output = await get_ffprobe_path(path, ffprobe_path="ffprobe")
+        ffprobe_path = os.getcwd()
+        output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
-        if not ffprobe_output:
+        if not output:
             await rm_dir(path)
             return await ms.edit(f"**Error fetching media info**")
 
         try:
-            details = json.loads(ffprobe_output[0])
+            details = json.loads(output[0])
             middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
 
             title = "StarMovies.hop.sh"
