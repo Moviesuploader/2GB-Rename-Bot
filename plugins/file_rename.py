@@ -24,12 +24,15 @@ from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-async def get_ffprobe_path(path: str, ffprobe_path: str = "ffprobe") -> Tuple[str, str, int, int]:
-    try:
-        ffprobe_output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-        return ffprobe_output
-    except Exception as e:
-        return None
+def find_ffprobe():
+    ffprobe_path = shutil.which('ffprobe')
+    if ffprobe_path:
+        return ffprobe_path
+    else:
+        # Provide the path to FFmpeg bin directory if it's not in the system's PATH
+        ffmpeg_bin_dir = '/usr/bin/ffmpeg'
+        ffprobe_path = shutil.which('ffprobe', path=ffmpeg_bin_dir)
+        return ffprobe_path
         
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
@@ -125,6 +128,7 @@ async def refunc(client, message):
             pass
 
         #ffprobe_path = os.getcwd()
+        ffprobe = find_ffprobe()
         ffprobe_path = ffprobe(file_path=file_path)
         output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
