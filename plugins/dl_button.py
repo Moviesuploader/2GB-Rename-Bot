@@ -100,7 +100,7 @@ async def ddl_call_back(bot, update):
         if file_size > 4194304000:
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
-                text=Translation.RCHD_TG_API_LIMIT,
+                text="Downloaded in {} seconds.\nDetected File Size: {}\nSorry. But, I cannot upload files greater than 2GB due to Telegram API limitations.",
                 message_id=update.message.message_id
             )
         else:
@@ -116,7 +116,7 @@ async def ddl_call_back(bot, update):
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
-                        Translation.UPLOAD_START,
+                        "Uploading...",
                         update.message,
                         start_time
                     )
@@ -136,7 +136,7 @@ async def ddl_call_back(bot, update):
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
-                        Translation.UPLOAD_START,
+                        "Uploading...",
                         update.message,
                         start_time
                     )
@@ -154,7 +154,7 @@ async def ddl_call_back(bot, update):
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
-                        Translation.UPLOAD_START,
+                        "Uploading...",
                         update.message,
                         start_time
                     )
@@ -171,7 +171,7 @@ async def ddl_call_back(bot, update):
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
-                        Translation.UPLOAD_START,
+                        "Uploading...",
                         update.message,
                         start_time
                     )
