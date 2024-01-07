@@ -74,31 +74,23 @@ async def rename_start(client, message):
 @Client.on_message(filters.private & filters.reply)
 async def refunc(client, message):
     reply_message = message.reply_to_message
-
     if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
         new_filename = message.text[:60]
         file_caption = message.text
-
         await message.delete()
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
         media = getattr(file, file.media.value)
-
         if not ".m" in new_filename:
             extn = media.file_name.rsplit('.', 1)[-1] if "." in media.file_name else "mkv"
             new_filename = f"{new_filename}.{extn}"
-
         if not any(ext in file_caption for ext in [".mp4", ".mkv"]):
             extn = media.file_name.rsplit('.', 1)[-1] if "." in media.file_name else "mkv"
             file_caption = f"{file_caption}.{extn}"
-
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
-
         upload_mode = await db.get_upload_mode(message.from_user.id)
-
         ms = await message.reply_text("**Trying to Ã°ÂÂÂ¥ Downloading...**")
-
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
