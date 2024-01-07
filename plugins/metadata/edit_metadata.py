@@ -15,7 +15,7 @@ def filesystem_free(path='.'):
     _, __, free = shutil.disk_usage(".")
     return free
 
-@Client.on_message(filters.command("video_info") & filters.private & ~filters.edited)
+@Client.on_message(filters.command("video_info") & filters.private)
 async def video_info_handler(c: Client, m: Message):
     user = message.from_user
     await db.add_user(client, message)
