@@ -3,22 +3,14 @@ import time
 import json
 import shlex
 import shutil
-from bot.client import (
-    Client
-)
-from configs import Config
-from pyrogram import filters
+from config import Config
+from pyrogram import Client, filters
 from pyrogram.types import Message
-from bot.core.file_info import (
-    get_media_file_name
-)
-from bot.core.db.database import db
-from bot.core.utils.rm import rm_dir
-from bot.core.utils.executor import execute
-from bot.core.db.add import add_user_to_database
+from plugins.metadata.file_info import get_media_file_name, get_file_attr
+from helper.database import db
+from plugins.metadata.utils import rm_dir
+from plugins.metadata.utils.executor import execute
 from bot.core.display import progress_for_pyrogram
-from bot.core.file_info import get_file_attr
-
 
 def filesystem_free(path='.'):
     _, __, free = shutil.disk_usage(".")
