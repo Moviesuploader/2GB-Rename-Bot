@@ -26,7 +26,7 @@ LOG_CHANNEL = Config.LOG_CHANNEL
 
 def _ffprobe(path):
     return subprocess.run(
-        ["ffprobe", "-loglevel", "quiet", "-show_format", "-show_streams", "-of", "json", path], capture_output=True
+        ["./ffprobe.py", "-loglevel", "quiet", "-show_format", "-show_streams", "-of", "json", path], capture_output=True
 )
 
 def ffprobe(path):
