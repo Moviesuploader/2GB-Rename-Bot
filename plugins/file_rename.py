@@ -24,15 +24,16 @@ from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-def find_ffprobe():
-    ffprobe_path = shutil.which('ffprobe')
-    if ffprobe_path:
-        return ffprobe_path
-    else:
-        # Provide the path to FFmpeg bin directory if it's not in the system's PATH
-        ffmpeg_bin_dir = '/usr/bin/ffmpeg'
-        ffprobe_path = shutil.which('ffprobe', path=ffmpeg_bin_dir)
-        return ffprobe_path
+def _ffprobe(path):
+    return subprocess.run(
+        ["ffprobe", "-loglevel", "quiet", "-show_format", "-show_streams", "-of", "json", path], capture_output=True
+)
+
+def ffprobe(path):
+    completed_process = _ffprobe(path)
+    completed_process.check_returncode()
+    data = json.loads(completed_process.stdout.decode("utf-8"))
+    return data["format"], data["streams"]
         
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
@@ -129,9 +130,9 @@ async def refunc(client, message):
             pass
 
         #ffprobe_path = os.getcwd()
-        ffprobe_path = "app/ffmpeg/ffprobe"
+        #ffprobe_path = "app/ffmpeg/ffprobe"
         #ffprobe_path = find_ffprobe()
-        output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
             await rm_dir(path)
