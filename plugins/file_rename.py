@@ -129,7 +129,7 @@ async def refunc(client, message):
             pass
 
         #ffprobe_path = os.getcwd()
-        ffprobe_path = "ffmpeg/ffprobe"
+        ffprobe_path = "app/ffmpeg/ffprobe"
         #ffprobe_path = find_ffprobe()
         output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
