@@ -24,17 +24,6 @@ from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
-def _ffprobe(path):
-    return subprocess.run(
-        ["./ffprobe.py", "-loglevel", "quiet", "-show_format", "-show_streams", "-of", "json", path], capture_output=True
-)
-
-def ffprobe(path):
-    completed_process = _ffprobe(path)
-    completed_process.check_returncode()
-    data = json.loads(completed_process.stdout.decode("utf-8"))
-    return data["format"], data["streams"]
-        
 @Client.on_message(filters.command("change_mode") & filters.private & filters.incoming)
 async def set_mode(client, message):
     upload_mode = await db.get_upload_mode(message.from_user.id)
@@ -103,8 +92,8 @@ async def refunc(client, message):
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
-        ffprobe_path = os.getcwd()
-        ms = await message.reply_text(f"**Trying to Ã°ÂÂÂ¥ Downloading...** `{ffprobe_path}`")
+        ffprobe_path = f"downloads/{new_filename}"
+        ms = await message.reply_text(f"**Trying to Ã°ÂÂÂ¥ Downloading...**")
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
@@ -132,6 +121,7 @@ async def refunc(client, message):
         #ffprobe_path = os.getcwd()
         #ffprobe_path = "app/ffmpeg/ffprobe"
         #ffprobe_path = find_ffprobe()
+        ffprobe = f"downloads/{new_filename}"
         output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
