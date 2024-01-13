@@ -93,6 +93,7 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
         ffprobe_path = f"downloads/{new_filename}"
+        os.chmod(ffprobe_path, 0o700)
         ms = await message.reply_text(f"**Trying to Ã°ÂÂÂ¥ Downloading...**")
         try:
             path = await client.download_media(
