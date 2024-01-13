@@ -14,13 +14,8 @@ import time
 import shutil
 import json
 import shlex
-import ffmpeg
 from plugins.utils import get_media_file_name, get_file_attr, rm_dir, execute
 from config import Config
-from mutagen.mp3 import MP3
-from mutagen.mp4 import MP4
-from mutagen import File
-from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
@@ -102,58 +97,13 @@ async def refunc(client, message):
             await ms.edit(str(e))
             return
 
-        duration = 0
-        try:
-            if media.file_name.endswith(".mp3"):
-                audio = MP3(path)
-                duration = audio.info.length
-            elif media.file_name.endswith((".mp4", ".mkv")):
-                audio = MP4(path)
-                duration = audio.info.length
-            elif media.file_name.endswith(".ogg"):
-                audio = File(path)
-                duration = audio.info.length
-
-        except Exception as e:
-            pass
-
-        #ffprobe_path = os.getcwd()
-        #ffprobe_path = "app/ffmpeg/ffprobe"
-        #ffprobe_path = find_ffprobe()
-        ffprobe = f"downloads/{new_filename}"
-        ffprobe_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ffprobe')
-        os.chmod(ffprobe, 0o700)
-        output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-        
-        if not output:
-            await rm_dir(path)
-            return await ms.edit(f"**Error Fetching Media info**")
-
-        try:
-            details = json.loads(output[0])
-            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
-
-            title = "StarMovies.hop.sh"
-            subtitle_title = "StarMovies.hop.sh"
-            audio_title = "StarMovies.hop.sh"
-            video_title = "StarMovies.hop.sh"
-            if title:
-                middle_cmd += f' -metadata title="{title}"'
-            for stream_index, stream in enumerate(details["streams"]):
-                if stream["codec_type"] == "video" and video_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{video_title}"'
-                elif stream["codec_type"] == "audio" and audio_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
-                elif stream["codec_type"] == "subtitle" and subtitle_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
-
-            middle_cmd += f"{shlex.quote(file_path)}"
-            await execute(middle_cmd)
-        except Exception as e:
-            # Clean up and handle the error
-            await rm_dir(path)
-            await ms.edit(f"**Error editing stream titles: {e}**")
-            return
+    duration = 0
+    try:
+        metadata = extractMetadata(createParser(file_path))
+        if metadata.has("duration"):
+           duration = metadata.get('duration').seconds
+    except:
+        pass
 
         # Set Caption and Thumbnail
         ph_path = None
