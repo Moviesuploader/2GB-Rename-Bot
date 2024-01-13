@@ -87,11 +87,11 @@ async def refunc(client, message):
         await reply_message.delete()
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
-        ms = await message.reply_text(f"**Trying to ð¥ Downloading...**")
+        ms = await message.reply_text(f"**Trying to 📥 Downloading...**")
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
-                progress=progress_for_pyrogram, progress_args=("<b>ð¥ Downloading...</b>", ms, time.time())
+                progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time())
             )
         except Exception as e:
             await ms.edit(str(e))
@@ -131,14 +131,14 @@ async def refunc(client, message):
                 img.resize((320, 320))
                 img.save(ph_path, "JPEG")
 
-        await ms.edit("**Trying to wryy Uploading...**")
+        await ms.edit("**Trying to 📤 Uploading...**")
 
         try:
             if upload_mode:
                 await client.send_video(
                     chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                    progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_video(
@@ -149,7 +149,7 @@ async def refunc(client, message):
                 await client.send_document(
                     chat_id=message.chat.id, document=file_path, thumb=ph_path,
                     caption=caption, progress=progress_for_pyrogram,
-                    progress_args=("<b>ð¤ Uploading...</b>", ms, time.time())
+                    progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_document(
