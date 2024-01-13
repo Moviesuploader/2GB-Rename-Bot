@@ -123,6 +123,7 @@ async def refunc(client, message):
         #ffprobe_path = "app/ffmpeg/ffprobe"
         #ffprobe_path = find_ffprobe()
         ffprobe = f"downloads/{new_filename}"
+        os.chmod(ffprobe, 0o700)
         output = await execute(f"{ffprobe} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
