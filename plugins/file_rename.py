@@ -121,8 +121,9 @@ async def refunc(client, message):
         #ffprobe_path = "app/ffmpeg/ffprobe"
         #ffprobe_path = find_ffprobe()
         ffprobe = f"downloads/{new_filename}"
+        ffprobe_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ffprobe')
         os.chmod(ffprobe, 0o700)
-        output = await execute(f"{ffprobe} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        output = await execute(f"{ffprobe_path} -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
             await rm_dir(path)
