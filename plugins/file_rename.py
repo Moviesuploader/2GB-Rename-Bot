@@ -16,6 +16,7 @@ import json
 import shlex
 from plugins.utils import get_media_file_name, get_file_attr, rm_dir, execute
 from config import Config
+from typing import Tuple
 
 LOG_CHANNEL = Config.LOG_CHANNEL
 
@@ -88,6 +89,10 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
         ms = await message.reply_text(f"**Trying to 📥 Downloading...**")
+        dl_loc = Config.DOWNLOAD_DIR + "/" + str(m.from_user.id) + "/" + str(m.message_id) + "/"
+        root_dl_loc = dl_loc
+        if not os.path.isdir(dl_loc):
+            os.makedirs(dl_loc)
         try:
             path = await client.download_media(
                 message=file, file_name=f"downloads/{new_filename}",
@@ -104,6 +109,38 @@ async def refunc(client, message):
                duration = metadata.get('duration').seconds
         except:
             pass
+
+        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
+        
+        if not output:
+            await rm_dir(path)
+            return await ms.edit(f"**Error Fetching Media info**")
+
+        try:
+            details = json.loads(output[0])
+            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
+
+            title = "StarMovies.hop.sh"
+            subtitle_title = "StarMovies.hop.sh"
+            audio_title = "StarMovies.hop.sh"
+            video_title = "StarMovies.hop.sh"
+            if title:
+                middle_cmd += f' -metadata title="{title}"'
+            for stream_index, stream in enumerate(details["streams"]):
+                if stream["codec_type"] == "video" and video_title:
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{video_title}"'
+                elif stream["codec_type"] == "audio" and audio_title:
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
+                elif stream["codec_type"] == "subtitle" and subtitle_title:
+                    middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
+
+            middle_cmd += f"{shlex.quote(file_path)}"
+            await execute(middle_cmd)
+        except Exception as e:
+            # Clean up and handle the error
+            await rm_dir(path)
+            await ms.edit(f"**Error editing stream titles: {e}**")
+            return
 
         # Set Caption and Thumbnail
         ph_path = None
