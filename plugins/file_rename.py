@@ -136,7 +136,7 @@ async def refunc(client, message):
             dl_loc = dl_loc + str(time.time()).replace(".", "") + "/"
             if not os.path.isdir(dl_loc):
                 os.makedirs(dl_loc)
-            middle_cmd += f"{shlex.quote(file_path)}"
+            middle_cmd += f"{shlex.quote(dl_loc + new_filename)}"
             await execute(middle_cmd)
         except Exception as e:
             # Clean up and handle the error
