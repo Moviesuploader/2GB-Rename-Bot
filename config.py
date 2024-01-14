@@ -1,4 +1,4 @@
-import re, os, time
+import re, os, time, logging
 
 id_pattern = re.compile(r'^.\d+$') 
 
