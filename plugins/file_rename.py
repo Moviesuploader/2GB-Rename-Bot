@@ -137,7 +137,7 @@ async def refunc(client, message):
         try:
             if upload_mode:
                 await client.send_video(
-                    chat_id=message.chat.id, video=file_path", caption=caption, thumb=ph_path,
+                    chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
                     progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
