@@ -89,49 +89,15 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
         ms = await message.reply_text(f"**Trying to 📥 Downloading...**")
-        dl_loc = Config.DOWNLOAD_DIR + "/" + str(message.from_user.id) + "/" + str(message.chat.id) + "/"
-        root_dl_loc = dl_loc
-        if not os.path.isdir(dl_loc):
-            os.makedirs(dl_loc)
-        path = await client.download_media(
-            message=file, file_name=dl_loc,
-            progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time())
-        )
-        
-        output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
-        
-        if not output:
-            await rm_dir(root_dl_loc)
-            return await ms.edit(f"**Error Fetching Media info**")
-
         try:
-            details = json.loads(output[0])
-            middle_cmd = f"ffmpeg -i {shlex.quote(file_path)} -c copy -map 0"
-
-            title = "StarMovies.hop.sh"
-            subtitle_title = "StarMovies.hop.sh"
-            audio_title = "StarMovies.hop.sh"
-            video_title = "StarMovies.hop.sh"
-            if title:
-                middle_cmd += f' -metadata title="{title}"'
-            for stream_index, stream in enumerate(details["streams"]):
-                if stream["codec_type"] == "video" and video_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{video_title}"'
-                elif stream["codec_type"] == "audio" and audio_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
-                elif stream["codec_type"] == "subtitle" and subtitle_title:
-                    middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
-            dl_loc = dl_loc + str(time.time()).replace(".", "") + "/"
-            if not os.path.isdir(dl_loc):
-                os.makedirs(dl_loc)
-            middle_cmd += f"{shlex.quote(dl_loc + new_filename)}"
-            await execute(middle_cmd)
+            path = await client.download_media(
+                message=file, file_name=f"downloads/{new_filename}",
+                progress=progress_for_pyrogram, progress_args=("<b>Ã°ÂÂÂ¥ Downloading...</b>", ms, time.time())
+            )
         except Exception as e:
-            # Clean up and handle the error
-            await rm_dir(root_dl_loc)
-            await ms.edit(f"**Error editing stream titles: {e}**")
+            await ms.edit(str(e))
             return
-
+        
         duration = 0
         try:
             metadata = extractMetadata(createParser(file_path))
@@ -171,24 +137,24 @@ async def refunc(client, message):
         try:
             if upload_mode:
                 await client.send_video(
-                    chat_id=message.chat.id, video=f"{dl_loc}{new_filename}", caption=caption, thumb=ph_path,
+                    chat_id=message.chat.id, video=file_path", caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
                     progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_video(
-                    chat_id=LOG_CHANNEL, video=f"{dl_loc}{new_filename}", caption=caption,
+                    chat_id=LOG_CHANNEL, video=file_path, caption=caption,
                     thumb=ph_path, duration=duration
                 )
             else:
                 await client.send_document(
-                    chat_id=message.chat.id, document=f"{dl_loc}{new_filename}", thumb=ph_path,
+                    chat_id=message.chat.id, document=file_path, thumb=ph_path,
                     caption=caption, progress=progress_for_pyrogram,
                     progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_document(
-                    chat_id=LOG_CHANNEL, document=f"{dl_loc}{new_filename}", thumb=ph_path, caption=caption
+                    chat_id=LOG_CHANNEL, document=file_path, thumb=ph_path, caption=caption
                 )
 
         except Exception as e:
