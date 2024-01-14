@@ -95,7 +95,7 @@ async def refunc(client, message):
             os.makedirs(dl_loc)
         try:
             path = await client.download_media(
-                message=file, file_name=f"downloads/{new_filename}",
+                message=file, file_name=dl_loc,
                 progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time())
             )
         except Exception as e:
@@ -113,7 +113,7 @@ async def refunc(client, message):
         output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
-            await rm_dir(path)
+            await rm_dir(root_dl_loc)
             return await ms.edit(f"**Error Fetching Media info**")
 
         try:
@@ -133,12 +133,14 @@ async def refunc(client, message):
                     middle_cmd += f' -metadata:s:{stream["index"]} title="{audio_title}"'
                 elif stream["codec_type"] == "subtitle" and subtitle_title:
                     middle_cmd += f' -metadata:s:{stream["index"]} title="{subtitle_title}"'
-
+            dl_loc = dl_loc + str(time.time()).replace(".", "") + "/"
+            if not os.path.isdir(dl_loc):
+                os.makedirs(dl_loc)
             middle_cmd += f"{shlex.quote(file_path)}"
             await execute(middle_cmd)
         except Exception as e:
             # Clean up and handle the error
-            await rm_dir(path)
+            await rm_dir(root_dl_loc)
             await ms.edit(f"**Error editing stream titles: {e}**")
             return
 
