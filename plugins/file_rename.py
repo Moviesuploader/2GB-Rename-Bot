@@ -93,15 +93,11 @@ async def refunc(client, message):
         root_dl_loc = dl_loc
         if not os.path.isdir(dl_loc):
             os.makedirs(dl_loc)
-        try:
-            path = await client.download_media(
-                message=file, file_name=dl_loc,
-                progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time())
-            )
-        except Exception as e:
-            await ms.edit(str(e))
-            return
-
+        path = await client.download_media(
+            message=file, file_name=dl_loc,
+            progress=progress_for_pyrogram, progress_args=("<b>📥 Downloading...</b>", ms, time.time())
+        )
+        
         output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
