@@ -19,6 +19,8 @@ class Config(object):
     FORCE_SUB   = os.environ.get("FORCE_SUB", "Star_Bots_Tamil") 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001821439025"))
     DOWNLOAD_DIR = os.environ.get("DOWNLOAD_DIR", "./downloads")
+    LOGGER = logging
+    
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
 
