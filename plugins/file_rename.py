@@ -89,7 +89,7 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
         ms = await message.reply_text(f"**Trying to 📥 Downloading...**")
-        dl_loc = Config.DOWNLOAD_DIR + "/" + str(m.from_user.id) + "/" + str(m.message_id) + "/"
+        dl_loc = Config.DOWNLOAD_DIR + "/" + str(message.from_user.id) + "/" + str(message.message_id) + "/"
         root_dl_loc = dl_loc
         if not os.path.isdir(dl_loc):
             os.makedirs(dl_loc)
@@ -175,24 +175,24 @@ async def refunc(client, message):
         try:
             if upload_mode:
                 await client.send_video(
-                    chat_id=message.chat.id, video=file_path, caption=caption, thumb=ph_path,
+                    chat_id=message.chat.id, video=f"{dl_loc}{new_filename}", caption=caption, thumb=ph_path,
                     duration=duration, progress=progress_for_pyrogram,
                     progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_video(
-                    chat_id=LOG_CHANNEL, video=file_path, caption=caption,
+                    chat_id=LOG_CHANNEL, video=f"{dl_loc}{new_filename}", caption=caption,
                     thumb=ph_path, duration=duration
                 )
             else:
                 await client.send_document(
-                    chat_id=message.chat.id, document=file_path, thumb=ph_path,
+                    chat_id=message.chat.id, document=f"{dl_loc}{new_filename}", thumb=ph_path,
                     caption=caption, progress=progress_for_pyrogram,
                     progress_args=("<b>📤 Uploading...</b>", ms, time.time())
                 )
                 # Additional handling for LOG_CHANNEL, modify as needed
                 await client.send_document(
-                    chat_id=LOG_CHANNEL, document=file_path, thumb=ph_path, caption=caption
+                    chat_id=LOG_CHANNEL, document=f"{dl_loc}{new_filename}", thumb=ph_path, caption=caption
                 )
 
         except Exception as e:
