@@ -89,7 +89,7 @@ async def refunc(client, message):
         file_path = f"downloads/{new_filename}"
         upload_mode = await db.get_upload_mode(message.from_user.id)
         ms = await message.reply_text(f"**Trying to 📥 Downloading...**")
-        dl_loc = Config.DOWNLOAD_DIR + "/" + str(message.from_user.id) + "/" + str(message.message_id) + "/"
+        dl_loc = Config.DOWNLOAD_DIR + "/" + str(message.from_user.id) + "/" + str(reply_message.message_id) + "/"
         root_dl_loc = dl_loc
         if not os.path.isdir(dl_loc):
             os.makedirs(dl_loc)
