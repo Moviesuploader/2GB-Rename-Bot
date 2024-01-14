@@ -102,14 +102,6 @@ async def refunc(client, message):
             await ms.edit(str(e))
             return
 
-        duration = 0
-        try:
-            metadata = extractMetadata(createParser(file_path))
-            if metadata.has("duration"):
-               duration = metadata.get('duration').seconds
-        except:
-            pass
-
         output = await execute(f"ffprobe -hide_banner -show_streams -print_format json {shlex.quote(path)}")
         
         if not output:
@@ -143,6 +135,14 @@ async def refunc(client, message):
             await rm_dir(root_dl_loc)
             await ms.edit(f"**Error editing stream titles: {e}**")
             return
+
+        duration = 0
+        try:
+            metadata = extractMetadata(createParser(file_path))
+            if metadata.has("duration"):
+               duration = metadata.get('duration').seconds
+        except:
+            pass
 
         # Set Caption and Thumbnail
         ph_path = None
