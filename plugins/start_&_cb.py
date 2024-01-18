@@ -11,8 +11,8 @@ async def start(client, message):
     button = InlineKeyboardMarkup([[
         InlineKeyboardButton("🧑🏻‍💻 Developer", callback_data='dev')
         ],[
-        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/Star_Bots_Tamil'),
-        InlineKeyboardButton('👥 Support Group', url='https://t.me/Star_Bots_Tamil_Support')
+        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/+E3fHEfR3DLAwZmZl'),
+        InlineKeyboardButton('👥 Support Group', url='https://t.me/beautyofthemoviesdiscussion')
         #],[
         #InlineKeyboardButton('⚙️ Settings', callback_data='showSettings')
         ],[
@@ -32,8 +32,8 @@ async def help(client, message):
     button = InlineKeyboardMarkup([[
         InlineKeyboardButton("🧑🏻‍💻 Developer", callback_data='dev')
         ],[
-        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/Star_Bots_Tamil'),
-        InlineKeyboardButton('👥 Support Group', url='https://t.me/Star_Bots_Tamil_Support')
+        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/+E3fHEfR3DLAwZmZl'),
+        InlineKeyboardButton('👥 Support Group', url='https://t.me/beautyofthemoviesdiscussion')
         ],[
         InlineKeyboardButton('⚙️ Settings', callback_data='settings')
         ],[
@@ -53,8 +53,8 @@ async def about(client, message):
     button = InlineKeyboardMarkup([[
         InlineKeyboardButton("🧑🏻‍💻 Developer", callback_data='dev')
         ],[
-        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/Star_Bots_Tamil'),
-        InlineKeyboardButton('👥 Support Group', url='https://t.me/Star_Bots_Tamil_Support')
+        InlineKeyboardButton('🤖 Update Channel', url='https://t.me/+E3fHEfR3DLAwZmZl'),
+        InlineKeyboardButton('👥 Support Group', url='https://t.me/beautyofthemoviesdiscussion')
         ],[
         InlineKeyboardButton('🛠️ Help', callback_data='help'),
         InlineKeyboardButton('🏠 Home', callback_data='start')
@@ -76,8 +76,8 @@ async def cb_handler(client, query: CallbackQuery):
             reply_markup = InlineKeyboardMarkup([[
                 InlineKeyboardButton("🧑🏻‍💻 Developer", callback_data='dev')
                 ],[
-                InlineKeyboardButton('🤖 Update Channel', url='https://t.me/Star_Bots_Tamil'),
-                InlineKeyboardButton('👥 Support Group', url='https://t.me/Star_Bots_Tamil_Support')
+                InlineKeyboardButton('🤖 Update Channel', url='https://t.me/+E3fHEfR3DLAwZmZl'),
+                InlineKeyboardButton('👥 Support Group', url='https://t.me/beautyofthemoviesdiscussion')
                 ],[
                 InlineKeyboardButton('🎛️ About', callback_data='about'),
                 InlineKeyboardButton('🛠️ Help', callback_data='help')
@@ -91,9 +91,9 @@ async def cb_handler(client, query: CallbackQuery):
             disable_web_page_preview=True,
             parse_mode=enums.ParseMode.MARKDOWN,
             reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/Star_Bots_Tamil")
+                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/+E3fHEfR3DLAwZmZl")
                 ],[
-                InlineKeyboardButton("👥 Support Group", url='https://t.me/Star_Bots_Tamil_Support')
+                InlineKeyboardButton("👥 Support Group", url='https://t.me/beautyofthemoviesdiscussion')
                 ],[
                 InlineKeyboardButton("⚙️ Settings", callback_data = "settings")
                 ],[
@@ -109,9 +109,9 @@ async def cb_handler(client, query: CallbackQuery):
             disable_web_page_preview = True,
             reply_markup=InlineKeyboardMarkup([[
                 #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/Star_Bots_Tamil")
+                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/+E3fHEfR3DLAwZmZl")
                 ],[
-                InlineKeyboardButton("👥 Support Group", url="https://t.me/Star_Bots_Tamil_Support")
+                InlineKeyboardButton("👥 Support Group", url="https://t.me/beautyofthemoviesdiscussion")
                 ],[
                 InlineKeyboardButton("🛠️ Help", callback_data = "help"),
                 InlineKeyboardButton("🏠 Home", callback_data = "start")
@@ -125,9 +125,9 @@ async def cb_handler(client, query: CallbackQuery):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[
                 #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/Star_Bots_Tamil")
+                InlineKeyboardButton("🤖 Update Channel", url="https://t.me/+E3fHEfR3DLAwZmZl")
                 ],[
-                InlineKeyboardButton("👥 Support Group", url="https://t.me/Star_Bots_Tamil_Support")
+                InlineKeyboardButton("👥 Support Group", url="https://t.me/beautyofthemoviesdiscussion")
                 ],[
                 InlineKeyboardButton("🎛️ About", callback_data = "about"),
                 InlineKeyboardButton("🏠 Home", callback_data = "start"),
