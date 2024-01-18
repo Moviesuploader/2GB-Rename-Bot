@@ -29,9 +29,9 @@ class Bot(Client):
             app = web.AppRunner(await web_server())
             await app.setup()       
             await web.TCPSite(app, "0.0.0.0", 8080).start()     
-        print(f"{me.first_name} is Started...✨️\nMade By :- https://t.me/Star_Bots_Tamil")
+        print(f"{me.first_name} is Started...✨️\nMade By :- https://t.me/beautyofthemoviesx")
         for id in Config.ADMIN:
-            try: await self.send_message(id, f"**__{me.first_name} is Started...✨️\nMade By :- [Star Bots Tamil](https://t.me/Star_Bots_Tamil)__**")                                
+            try: await self.send_message(id, f"**__{me.first_name} is Started...✨️\nMade By :- [BEAUTY OF THE MOVIES](https://t.me/beautyofthemoviesx)__**")                                
             except: pass
         if Config.LOG_CHANNEL:
             try:
